@@ -1,9 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactCompiler: true,
-  trailingSlash: true,
+  turbopack: {
+    root: process.cwd(),
+  },
+  allowedDevOrigins: ["192.168.1.121"],
   images: {
-    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "i.pinimg.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+    ],
   },
 };
 

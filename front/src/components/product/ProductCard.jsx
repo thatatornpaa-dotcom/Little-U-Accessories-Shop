@@ -26,13 +26,15 @@ export default function ProductCard({ product }) {
     }
   };
 
-  const mainImage = product.images && product.images.length > 0 
-    ? product.images[0].url 
-    : "/images/placeholder.jpg"; 
+  const mainImage =
+    product.images && product.images.length > 0
+      ? product.images[0].url
+      : "/images/placeholder.jpg";
 
   const isMadeToOrder = product.type === "MADE_TO_ORDER";
 
-  const isOutOfStock = product.type === "READY_TO_SHIP" && product.stock === 0;
+  const isOutOfStock =
+    product.type === "READY_TO_SHIP" && product.stock === 0;
 
   const formatPrice = (priceValue) => {
     if (priceValue === null || priceValue === undefined) return 0;
@@ -43,15 +45,13 @@ export default function ProductCard({ product }) {
   return (
     <Link
       href={`/products/${product.name.replace(/\s+/g, "-")}`}
-      className="bg-white border border-[#EFE9DC] rounded-[2rem] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full group block"
+      className="bg-white border border-[#FADCE3] rounded-[2rem] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full group block"
     >
-      
-      {/*  ส่วนรูปภาพหน้าปกสินค้า */}
-      <div className="relative w-full aspect-square overflow-hidden bg-[#F5F0E6]/30">
-        
+      {/* ส่วนรูปภาพหน้าปกสินค้า */}
+      <div className="relative w-full aspect-square overflow-hidden bg-[#FFF5F7]">
         {/* ป้ายแท็กสั่งทำพิเศษ (แสดงเฉพาะสินค้าที่เป็น MADE_TO_ORDER) */}
         {isMadeToOrder && (
-          <div className="absolute top-4 left-4 bg-[#6A5242] text-white text-[11px] font-bold px-3 py-1.5 rounded-lg z-10 shadow-sm font-anuphan">
+          <div className="absolute top-4 left-4 bg-[#E87A90] text-white text-[11px] font-bold px-3 py-1.5 rounded-lg z-10 shadow-sm font-anuphan">
             สั่งทำพิเศษ
           </div>
         )}
@@ -63,7 +63,9 @@ export default function ProductCard({ product }) {
         >
           <svg
             className={`w-5 h-5 transition-colors ${
-              isLiked ? "fill-red-500 text-red-500" : "text-[#6A5242] group-hover/heart:text-red-500"
+              isLiked
+                ? "fill-[#E87A90] text-[#E87A90]"
+                : "text-[#E87A90] group-hover/heart:fill-[#E87A90]"
             }`}
             fill={isLiked ? "currentColor" : "none"}
             stroke="currentColor"
@@ -76,8 +78,8 @@ export default function ProductCard({ product }) {
 
         {/* ป้ายกำกับสินค้าหมดระดับพรีเมียม (Out of Stock Overlay) */}
         {isOutOfStock && (
-          <div className="absolute inset-0 bg-[#3C322A]/40 backdrop-blur-[1.5px] z-10 flex items-center justify-center">
-            <span className="bg-[#FFFFFF]/95 text-[#6A5242] border border-[#EFE9DC] text-[11px] font-extrabold px-4 py-2.5 rounded-full shadow-md font-anuphan tracking-wide uppercase">
+          <div className="absolute inset-0 bg-[#3B262B]/40 backdrop-blur-[1.5px] z-10 flex items-center justify-center">
+            <span className="bg-[#FFFFFF]/95 text-[#3B262B] border border-[#FADCE3] text-[11px] font-extrabold px-4 py-2.5 rounded-full shadow-md font-anuphan tracking-wide uppercase">
               สินค้าหมด (Out of Stock)
             </span>
           </div>
@@ -97,11 +99,11 @@ export default function ProductCard({ product }) {
       {/* 📝 ส่วนข้อมูลรายละเอียดสินค้า */}
       <div className="p-5 flex flex-col flex-grow justify-between font-anuphan">
         <div className="space-y-2">
-          <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider block">
-            {product.brand || "BARE & BOLD"}
+          <span className="text-[11px] font-bold text-[#E87A90] uppercase tracking-wider block">
+            {product.brand || "LITTLE U"}
           </span>
-          
-          <h3 className="text-base font-extrabold text-[#3C322A] line-clamp-2 min-h-[3rem] leading-snug">
+
+          <h3 className="text-base font-extrabold text-[#3B262B] line-clamp-2 min-h-[3rem] leading-snug">
             {product.name}
           </h3>
 
@@ -110,10 +112,10 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* ราคาสินค้าและปุ่มแอคชัน */}
-        <div className="mt-4 pt-3 border-t border-[#F5F0E6] flex flex-col gap-3">
+        <div className="mt-4 pt-3 border-t border-[#FFF0F3] flex flex-col gap-3">
           <div className="flex items-baseline gap-2">
-            {/*  เปลี่ยนมาเรียกใช้ฟังก์ชันแปลงราคาอย่างปลอดภัย */}
-            <span className="text-lg font-black text-[#3C322A]">
+            {/* เปลี่ยนมาเรียกใช้ฟังก์ชันแปลงราคาอย่างปลอดภัย */}
+            <span className="text-lg font-black text-[#3B262B]">
               {formatPrice(product.price).toLocaleString()} บาท
             </span>
             {product.originalPrice && (
@@ -126,8 +128,8 @@ export default function ProductCard({ product }) {
           <div
             className={`w-full text-center py-2.5 font-bold text-xs rounded-xl transition duration-300 inline-block cursor-pointer shadow-sm border-2 ${
               isOutOfStock
-                ? "bg-[#F5F0E6]/50 border-zinc-200 text-zinc-400 cursor-not-allowed"
-                : "bg-white border-[#6A5242] text-[#6A5242] group-hover:bg-[#6A5242] group-hover:text-white"
+                ? "bg-[#FFF5F7] border-[#FADCE3] text-zinc-400 cursor-not-allowed"
+                : "bg-white border-[#E87A90] text-[#E87A90] group-hover:bg-[#E87A90] group-hover:text-white"
             }`}
           >
             {isOutOfStock ? "สินค้าหมด" : "ดูรายละเอียดสินค้า"}

@@ -5,7 +5,7 @@
  * - แปลง error จาก backend ให้เป็น Error ที่มี status ติดมาด้วย
  */
 const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001/api";
 
 export const getAuthToken = () => {
   if (typeof window === "undefined") return null;

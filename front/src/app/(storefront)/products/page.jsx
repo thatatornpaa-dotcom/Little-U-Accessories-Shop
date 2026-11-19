@@ -62,31 +62,31 @@ export default function ProductsPage() {
       const matchCategory =
         category === "all" ||
         product.category?.toLowerCase() === category.toLowerCase() ||
-        (category === "anklet" && product.name?.toLowerCase().includes("anklet")) ||
-        (category === "bracelet" && product.name?.toLowerCase().includes("bracelet"));
+        (category === "anklet" &&
+          product.name?.toLowerCase().includes("anklet")) ||
+        (category === "bracelet" &&
+          product.name?.toLowerCase().includes("bracelet"));
 
-      const matchType =
-        type === "all" ||
-        product.type === type;
+      const matchType = type === "all" || product.type === type;
 
       return matchSearch && matchCategory && matchType;
     });
   }, [products, search, category, type]);
 
   return (
-    <main className="min-h-screen bg-[#FDFBF7]">
+    <main className="min-h-screen bg-[#FFF9FA]">
       {/* Hero */}
-      <section className="bg-earth-beige border-b border-earth-border">
+      <section className="bg-gradient-to-r from-[#FFF5F7] to-[#FCE8ED] border-b border-[#FADCE3]">
         <div className="max-w-[1440px] mx-auto px-6 py-16">
-          <p className="uppercase tracking-[5px] text-earth-olive font-bold text-xs">
-            Bare & Bold
+          <p className="uppercase tracking-[5px] text-[#E87A90] font-bold text-xs">
+            Little U Accessories Shop
           </p>
 
-          <h1 className="text-5xl font-black mt-4 text-earth-dark">ร้านค้า</h1>
+          <h1 className="text-5xl font-black mt-4 text-[#3B262B]">ร้านค้า</h1>
 
           <p className="mt-4 text-zinc-600 max-w-2xl leading-7">
-            เลือกชมกำไลข้อมือและกำไลข้อเท้าจากคอลเลกชันของเรา ทั้งสินค้า Ready
-            to Ship และ Made to Order ที่สามารถออกแบบได้ตามสไตล์ของคุณ
+            เลือกชมเครื่องประดับและแอคเซสเซอรีน่ารักๆ จากคอลเลกชันของ Little U
+            ทั้งสินค้าพร้อมส่งและสั่งทำพิเศษที่สามารถออกแบบได้ตามสไตล์ของคุณ
           </p>
         </div>
       </section>
@@ -94,11 +94,11 @@ export default function ProductsPage() {
       {/* Breadcrumb */}
       <div className="max-w-[1440px] mx-auto px-6 pt-8 text-sm text-zinc-500">
         <div className="flex items-center gap-2 font-anuphan">
-          <Link href="/" className="text-earth-olive font-bold hover:underline">
+          <Link href="/" className="text-[#E87A90] font-bold hover:underline">
             หน้าแรก
           </Link>
           <span>/</span>
-          <span className="text-earth-dark font-bold">ร้านค้า</span>
+          <span className="text-[#3B262B] font-bold">ร้านค้า</span>
         </div>
       </div>
 
@@ -116,7 +116,7 @@ export default function ProductsPage() {
         <div className="mt-10">
           {loading && (
             <div className="text-center py-20 text-zinc-400 font-medium font-anuphan">
-              <span className="inline-block w-8 h-8 border-4 border-[#556B2F]/20 border-t-[#556B2F] rounded-full animate-spin mb-4" />
+              <span className="inline-block w-8 h-8 border-4 border-[#E87A90]/25 border-t-[#E87A90] rounded-full animate-spin mb-4" />
               <p>กำลังโหลดสินค้า...</p>
             </div>
           )}
@@ -127,9 +127,7 @@ export default function ProductsPage() {
             </div>
           )}
 
-          {!loading && !error && (
-            <ProductGrid products={filteredProducts} />
-          )}
+          {!loading && !error && <ProductGrid products={filteredProducts} />}
         </div>
       </div>
     </main>

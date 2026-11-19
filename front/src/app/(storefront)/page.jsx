@@ -8,7 +8,6 @@ import TrustBadges from "@/components/home/TrustBadges";
 import ProductCard from "@/components/product/ProductCard";
 import { productService } from "@/services/product.service";
 
-
 export default function Storefront() {
   const [activeTab, setActiveTab] = useState("new"); // new, best, sale
   const [products, setProducts] = useState([]);
@@ -36,20 +35,24 @@ export default function Storefront() {
   const getFilteredProducts = () => {
     if (activeTab === "sale") {
       // Products with discount (originalPrice is present)
-      return products.filter((p) => p.originalPrice !== null && p.originalPrice !== undefined);
+      return products.filter(
+        (p) => p.originalPrice !== null && p.originalPrice !== undefined,
+      );
     }
     if (activeTab === "best") {
       // Simulating best sellers (or fallback to showing custom products)
       return products.filter((p) => p.type === "MADE_TO_ORDER");
     }
     // "new" or default list (sorted newest first)
-    return [...products].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    return [...products].sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+    );
   };
 
   const filteredProducts = getFilteredProducts();
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-[#3C322A] font-sans antialiased">
+    <div className="min-h-screen bg-[#FFF9FA] text-[#3B262B] font-sans antialiased">
       {/* 2. Hero Section */}
       <Hero />
 
@@ -60,13 +63,13 @@ export default function Storefront() {
       <TrustBadges />
 
       {/* 5. Filter Category Tabs */}
-      <section className="font-anuphan max-w-[1440px] mx-auto px-6 pt-16 pb-8 flex justify-center gap-8 border-b border-[#F5F0E6]">
+      <section className="font-anuphan max-w-[1440px] mx-auto px-6 pt-16 pb-8 flex justify-center gap-8 border-b border-[#FADCE3]">
         <button
           onClick={() => setActiveTab("new")}
           className={`pb-2 text-base font-extrabold uppercase tracking-widest transition-all cursor-pointer ${
             activeTab === "new"
-              ? "text-[#556B2F] border-b-2 border-[#556B2F]"
-              : "text-[#777777] hover:text-[#3C322A]"
+              ? "text-[#E87A90] border-b-2 border-[#E87A90]"
+              : "text-[#777777] hover:text-[#3B262B]"
           }`}
         >
           มาใหม่
@@ -75,8 +78,8 @@ export default function Storefront() {
           onClick={() => setActiveTab("best")}
           className={`pb-2 text-base font-extrabold uppercase tracking-widest transition-all cursor-pointer ${
             activeTab === "best"
-              ? "text-[#556B2F] border-b-2 border-[#556B2F]"
-              : "text-[#777777] hover:text-[#3C322A]"
+              ? "text-[#E87A90] border-b-2 border-[#E87A90]"
+              : "text-[#777777] hover:text-[#3B262B]"
           }`}
         >
           สั่งทำพิเศษ
@@ -85,8 +88,8 @@ export default function Storefront() {
           onClick={() => setActiveTab("sale")}
           className={`pb-2 text-base font-extrabold uppercase tracking-widest transition-all cursor-pointer ${
             activeTab === "sale"
-              ? "text-[#556B2F] border-b-2 border-[#556B2F]"
-              : "text-[#777777] hover:text-[#3C322A]"
+              ? "text-[#E87A90] border-b-2 border-[#E87A90]"
+              : "text-[#777777] hover:text-[#3B262B]"
           }`}
         >
           ลดราคา
@@ -97,12 +100,12 @@ export default function Storefront() {
       <section className="max-w-[1440px] mx-auto px-6 py-12">
         {loading ? (
           <div className="text-center py-20 text-zinc-400 font-medium font-anuphan">
-            <span className="inline-block w-8 h-8 border-4 border-[#556B2F]/20 border-t-[#556B2F] rounded-full animate-spin mb-4" />
+            <span className="inline-block w-8 h-8 border-4 border-[#E87A90]/25 border-t-[#E87A90] rounded-full animate-spin mb-4" />
             <p>กำลังโหลดสินค้าแนะนำสำหรับคุณ...</p>
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="text-center py-20 text-zinc-400 font-medium font-anuphan border border-dashed border-[#F5F0E6] rounded-2xl bg-white/50">
-            <span className="text-4xl block mb-3">💎</span>
+          <div className="text-center py-20 text-zinc-400 font-medium font-anuphan border border-dashed border-[#FADCE3] rounded-2xl bg-white/70">
+            <span className="text-4xl block mb-3">🎀</span>
             <p>ยังไม่มีสินค้าในหมวดหมู่นี้ในขณะนี้</p>
           </div>
         ) : (

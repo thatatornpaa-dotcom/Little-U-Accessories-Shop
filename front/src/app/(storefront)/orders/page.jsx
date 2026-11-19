@@ -7,7 +7,7 @@ import { cartService } from "@/services/cart.service";
 import { paymentService } from "@/services/payment.service";
 import {Clock,MapPin,Truck,AlertCircle,ShoppingBag,Store,ChevronDown,ChevronUp,RotateCcw,ImagePlus,} from "lucide-react";
 
-// Theme color constants matching f:/GitHub/CSI204-BareAndBold/bareandbold_front/src/app/globals.css
+// Theme color constants matching f:/GitHub/CSI204-BareAndBold/front/src/app/globals.css
 const CREAM = "#FDFBF7";       // earth-cream
 const BEIGE = "#F5F0E6";       // earth-beige
 const WALNUT = "#6A5242";      // earth-walnut

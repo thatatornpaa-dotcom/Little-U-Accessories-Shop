@@ -1,6 +1,17 @@
 -- AlterTable
 ALTER TABLE "Order" ADD COLUMN     "shippingFee" DECIMAL(10,2) NOT NULL DEFAULT 0.00;
 
+-- CreateTable
+CREATE TABLE IF NOT EXISTS "PayoutRequest" (
+    "id" TEXT NOT NULL,
+    "shopId" TEXT NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'PENDING',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "PayoutRequest_pkey" PRIMARY KEY ("id")
+);
+
 -- AlterTable
 ALTER TABLE "PayoutRequest" ADD COLUMN     "clientRequestId" TEXT,
 ADD COLUMN     "processedById" TEXT,

@@ -11,7 +11,7 @@ import {
   UserCircleIcon,
   PackageIcon,
   Logout01Icon,
-  Settings02Icon
+  Settings02Icon,
 } from "hugeicons-react";
 import AuthModal from "../auth/AuthModal";
 import CartDrawer from "../cart/CartDrawer";
@@ -23,7 +23,7 @@ const NAV_LINKS = [
   { label: "ร้านค้า", href: "/products" },
   { label: "ติดต่อเรา", href: "/contact" },
   { label: "เอกสารระบบ", href: "/docs" },
-  { label: "การ์ดสุ่มดวง", href: "/fortune-card" }
+  { label: "การ์ดสุ่มดวง", href: "/fortune-card" },
 ];
 
 export default function Header({
@@ -68,33 +68,33 @@ export default function Header({
     }
   }, [authLoading, contextLoggedIn, authUser]);
 
- useEffect(() => {
-  if (typeof window === "undefined") return;
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
-  const loadProfile = () => {
-    const token = localStorage.getItem("bare_auth_token");
+    const loadProfile = () => {
+      const token = localStorage.getItem("bare_auth_token");
 
-    if (token) {
-      setIsLoggedIn(true);
+      if (token) {
+        setIsLoggedIn(true);
 
-      const savedUser = localStorage.getItem("bare_user");
-      if (savedUser) {
-        setUser(JSON.parse(savedUser));
+        const savedUser = localStorage.getItem("bare_user");
+        if (savedUser) {
+          setUser(JSON.parse(savedUser));
+        }
+
+        const savedAvatar = localStorage.getItem("avatar");
+        setAvatar(savedAvatar);
       }
+    };
 
-      const savedAvatar = localStorage.getItem("avatar");
-      setAvatar(savedAvatar);
-    }
-  };
+    loadProfile();
 
-  loadProfile();
+    window.addEventListener("profileUpdated", loadProfile);
 
-  window.addEventListener("profileUpdated", loadProfile);
-
-  return () => {
-    window.removeEventListener("profileUpdated", loadProfile);
-  };
-}, []);
+    return () => {
+      window.removeEventListener("profileUpdated", loadProfile);
+    };
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -158,17 +158,17 @@ export default function Header({
   }, [isLoggedIn]);
 
   const handleLogout = async () => {
-localStorage.removeItem("bare_auth_token");
-localStorage.removeItem("bare_user");
-localStorage.removeItem("bare_user_email");
-localStorage.removeItem("profile");
-localStorage.removeItem("avatar");
-localStorage.removeItem("addresses");
-localStorage.removeItem("bare_cart");
+    localStorage.removeItem("bare_auth_token");
+    localStorage.removeItem("bare_user");
+    localStorage.removeItem("bare_user_email");
+    localStorage.removeItem("profile");
+    localStorage.removeItem("avatar");
+    localStorage.removeItem("addresses");
+    localStorage.removeItem("bare_cart");
 
-await contextLogout();
-setUser(null);
-setAvatar(null);
+    await contextLogout();
+    setUser(null);
+    setAvatar(null);
     setIsLoggedIn(false);
     setIsProfileOpen(false);
     if (onAuthStatusChange) {
@@ -179,53 +179,61 @@ setAvatar(null);
   };
 
   const handleAuthSuccess = (user) => {
-  const hasToken = !!localStorage.getItem("bare_auth_token");
+    const hasToken = !!localStorage.getItem("bare_auth_token");
 
-  setIsLoggedIn(hasToken);
-  setUser(user);
-  refreshAuth();
+    setIsLoggedIn(hasToken);
+    setUser(user);
+    refreshAuth();
 
-  const savedAvatar = localStorage.getItem("avatar");
-  setAvatar(savedAvatar);
+    const savedAvatar = localStorage.getItem("avatar");
+    setAvatar(savedAvatar);
 
-  if (onAuthStatusChange) {
-    onAuthStatusChange(hasToken, user);
-  }
-};
+    if (onAuthStatusChange) {
+      onAuthStatusChange(hasToken, user);
+    }
+  };
 
   return (
     <>
       {/* Main Navigation Bar */}
-      <header className="sticky top-0 z-50 bg-[#FFFFFF]/95 backdrop-blur-md border-b border-[#F5F0E6] shadow-sm">
+      <header className="sticky top-0 z-50 bg-[#FFF9FA]/95 backdrop-blur-md border-b border-[#FADCE3] shadow-sm">
         <div className="max-w-[1440px] mx-auto px-6 h-18 flex items-center justify-between">
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 hover:text-earth-olive transition select-none text-earth-dark"
+            className="flex items-center gap-2 hover:text-[#E87A90] transition select-none text-[#3B262B]"
             prefetch={false}
           >
-            <svg className="w-6 h-6 transition-transform duration-300 hover:rotate-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" />
-              <path d="M8.5 12C8.5 13.933 10.067 15.5 12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12Z" fill="currentColor" />
-              <path d="M12 5C8.134 5 5 8.134 5 12C5 15.866 8.134 19 12 19C15.866 19 19 15.866 19 12C19 8.134 15.866 5 12 5Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            <svg
+              className="w-6 h-6 text-[#E87A90] transition-transform duration-300 hover:scale-110"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z"
+                fill="currentColor"
+              />
             </svg>
-            <span className="text-xl font-bold uppercase tracking-[0.15em] font-sans">
-              Bare & Bold
+            <span className="text-2xl font-bold tracking-wide font-sans text-[#E87A90]">
+              Little U
             </span>
           </Link>
 
           {/* Nav links */}
           <nav className="hidden md:flex items-center gap-8 text-[14px] font-anuphan font-bold">
             {NAV_LINKS.map((link) => {
-              const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href));
+              const isActive =
+                pathname === link.href ||
+                (link.href !== "/" && pathname.startsWith(link.href));
               return (
                 <Link
                   key={link.label}
                   href={link.href}
                   className={`transition ${
                     isActive
-                      ? "text-earth-olive border-b-2 border-earth-olive pb-1"
-                      : "text-earth-dark hover:text-earth-olive"
+                      ? "text-[#E87A90] border-b-2 border-[#E87A90] pb-1"
+                      : "text-[#3B262B] hover:text-[#E87A90]"
                   }`}
                   prefetch={false}
                 >
@@ -236,27 +244,32 @@ setAvatar(null);
           </nav>
 
           {/* Action Icons & Profile Access */}
-          <div className="flex items-center gap-5 text-earth-dark">
-            <Link href="/products" className="w-10 h-10 flex items-center justify-center hover:text-earth-olive transition">
+          <div className="flex items-center gap-5 text-[#3B262B]">
+            <Link
+              href="/products"
+              className="w-10 h-10 flex items-center justify-center hover:text-[#E87A90] transition"
+            >
               <Search01Icon size={20} strokeWidth={2} />
             </Link>
-            
+
             {/* Wishlist Dropdown */}
             <div className="relative" ref={wishlistMenuRef}>
               <button
                 onClick={() => setIsWishlistOpen(!isWishlistOpen)}
-                className="relative w-10 h-10 flex items-center justify-center hover:text-earth-olive transition cursor-pointer"
+                className="relative w-10 h-10 flex items-center justify-center hover:text-[#E87A90] transition cursor-pointer"
               >
                 <FavouriteIcon size={20} strokeWidth={2} />
                 {wishlistItems.length > 0 && (
-                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#E87A90] rounded-full animate-pulse" />
                 )}
               </button>
 
               {isWishlistOpen && (
-                <div className="absolute right-0 mt-3 w-72 rounded-xl bg-white border border-[#E7DDC8] shadow-xl overflow-hidden z-50 p-4 font-anuphan">
-                  <h3 className="font-extrabold text-sm text-[#3C322A] mb-3 pb-2 border-b border-[#F5F0E6]">รายการโปรดของคุณ ({wishlistItems.length})</h3>
-                  
+                <div className="absolute right-0 mt-3 w-72 rounded-xl bg-white border border-[#FADCE3] shadow-xl overflow-hidden z-50 p-4 font-anuphan">
+                  <h3 className="font-extrabold text-sm text-[#3B262B] mb-3 pb-2 border-b border-[#FFF0F3]">
+                    รายการโปรดของคุณ ({wishlistItems.length})
+                  </h3>
+
                   {wishlistItems.length === 0 ? (
                     <div className="text-center py-6 text-xs text-zinc-400 font-bold">
                       ไม่มีสินค้าในรายการโปรด
@@ -264,29 +277,55 @@ setAvatar(null);
                   ) : (
                     <div className="max-h-60 overflow-y-auto space-y-3">
                       {wishlistItems.map((item) => (
-                        <div key={item.id} className="flex gap-3 items-center justify-between group">
-                          <Link 
-                            href={`/products/${item.name?.toLowerCase().replace(/ /g, "-")}`}
+                        <div
+                          key={item.id}
+                          className="flex gap-3 items-center justify-between group"
+                        >
+                          <Link
+                            href={`/products/${item.name
+                              ?.toLowerCase()
+                              .replace(/ /g, "-")}`}
                             onClick={() => setIsWishlistOpen(false)}
                             className="flex items-center gap-2 flex-1 min-w-0"
                           >
-                            <img 
-                              src={item.images?.[0]?.url || item.images?.[0] || item.imageUrl || "/placeholder.jpg"} 
-                              alt={item.name} 
-                              className="w-10 h-10 object-cover rounded-lg bg-zinc-50 border border-zinc-100 flex-shrink-0"
+                            <img
+                              src={
+                                item.images?.[0]?.url ||
+                                item.images?.[0] ||
+                                item.imageUrl ||
+                                "/placeholder.jpg"
+                              }
+                              alt={item.name}
+                              className="w-10 h-10 object-cover rounded-lg bg-[#FFF5F7] border border-[#FADCE3] flex-shrink-0"
                             />
                             <div className="min-w-0 flex-1">
-                              <p className="text-xs font-bold text-[#3C322A] truncate hover:text-[#556B2F]">{item.name}</p>
-                              <p className="text-[10px] text-zinc-400">฿{Number(item.price).toLocaleString()}</p>
+                              <p className="text-xs font-bold text-[#3B262B] truncate hover:text-[#E87A90]">
+                                {item.name}
+                              </p>
+                              <p className="text-[10px] text-zinc-400">
+                                ฿{Number(item.price).toLocaleString()}
+                              </p>
                             </div>
                           </Link>
                           <button
-                            onClick={() => wishlistService.removeFromWishlist(item.id)}
-                            className="text-zinc-300 hover:text-red-500 p-1.5 transition cursor-pointer rounded-full hover:bg-red-50"
+                            onClick={() =>
+                              wishlistService.removeFromWishlist(item.id)
+                            }
+                            className="text-zinc-300 hover:text-[#E87A90] p-1.5 transition cursor-pointer rounded-full hover:bg-[#FFF5F7]"
                             title="ลบจากรายการโปรด"
                           >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              strokeWidth="2.5"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6 18L18 6M6 6l12 12"
+                              />
                             </svg>
                           </button>
                         </div>
@@ -299,11 +338,11 @@ setAvatar(null);
 
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative hover:text-earth-olive transition cursor-pointer"
+              className="relative hover:text-[#E87A90] transition cursor-pointer"
             >
               <ShoppingBag01Icon size={20} strokeWidth={2} />
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 w-4 h-4 bg-earth-walnut text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 w-4 h-4 bg-[#E87A90] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
@@ -313,22 +352,22 @@ setAvatar(null);
               {isLoggedIn ? (
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="w-10 h-10 flex items-center justify-center hover:text-earth-olive transition cursor-pointer"
+                  className="w-10 h-10 flex items-center justify-center hover:text-[#E87A90] transition cursor-pointer"
                 >
                   {avatar ? (
-  <img
-    src={avatar}
-    alt="Profile"
-    className="w-9 h-9 rounded-full object-cover"
-  />
-) : (
-  <UserCircleIcon size={21} strokeWidth={2} />
-)}
+                    <img
+                      src={avatar}
+                      alt="Profile"
+                      className="w-9 h-9 rounded-full object-cover border border-[#FADCE3]"
+                    />
+                  ) : (
+                    <UserCircleIcon size={21} strokeWidth={2} />
+                  )}
                 </button>
               ) : (
                 <button
                   onClick={() => setIsAuthOpen(true)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-earth-beige hover:bg-earth-border border border-earth-border transition text-xs font-bold text-earth-dark cursor-pointer"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FFF5F7] hover:bg-[#FCE4EA] border border-[#F7C8D3] transition text-xs font-bold text-[#3B262B] cursor-pointer"
                 >
                   <UserIcon size={14} strokeWidth={2.5} />
                   <span>เข้าสู่ระบบ</span>
@@ -336,13 +375,13 @@ setAvatar(null);
               )}
 
               {isProfileOpen && isLoggedIn && (
-                <div className="absolute right-0 mt-3 w-56 rounded-xl bg-white border border-earth-border shadow-xl overflow-hidden z-50 py-1 font-anuphan">
-                  <div className="px-4 py-3 border-b border-gray-100">
+                <div className="absolute right-0 mt-3 w-56 rounded-xl bg-white border border-[#FADCE3] shadow-xl overflow-hidden z-50 py-1 font-anuphan">
+                  <div className="px-4 py-3 border-b border-[#FFF0F3]">
                     <p className="text-xs text-zinc-400">บัญชีผู้ใช้</p>
-                    <p className="text-sm font-bold text-earth-dark truncate mt-0.5">
+                    <p className="text-sm font-bold text-[#3B262B] truncate mt-0.5">
                       {user
-  ? `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim()
-  : localStorage.getItem("bare_user_email")}
+                        ? `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim()
+                        : localStorage.getItem("bare_user_email")}
                     </p>
                   </div>
 
@@ -352,7 +391,7 @@ setAvatar(null);
                       <Link
                         href="/seller"
                         onClick={() => setIsProfileOpen(false)}
-                        className="flex items-center gap-3 px-4 py-3 hover:bg-[#F8F5EE] text-sm font-bold text-earth-olive transition"
+                        className="flex items-center gap-3 px-4 py-3 hover:bg-[#FFF5F7] text-sm font-bold text-[#E87A90] transition"
                       >
                         <Settings02Icon size={18} />
                         Seller Center
@@ -360,7 +399,7 @@ setAvatar(null);
                       <Link
                         href={`/shop/${shop.slug}`}
                         onClick={() => setIsProfileOpen(false)}
-                        className="flex items-center gap-3 px-4 py-3 hover:bg-[#F8F5EE] text-sm font-bold text-earth-dark transition"
+                        className="flex items-center gap-3 px-4 py-3 hover:bg-[#FFF5F7] text-sm font-bold text-[#3B262B] transition"
                       >
                         <ShoppingBag01Icon size={18} />
                         ดูร้านของฉัน
@@ -370,7 +409,7 @@ setAvatar(null);
                     <Link
                       href="/become-seller"
                       onClick={() => setIsProfileOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-[#F8F5EE] text-sm font-bold text-amber-600 transition"
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-[#FFF5F7] text-sm font-bold text-amber-600 transition"
                     >
                       <ShoppingBag01Icon size={18} />
                       ร้านรอการอนุมัติ
@@ -379,7 +418,7 @@ setAvatar(null);
                     <Link
                       href="/become-seller"
                       onClick={() => setIsProfileOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-[#F8F5EE] text-sm font-bold text-earth-dark transition"
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-[#FFF5F7] text-sm font-bold text-[#3B262B] transition"
                     >
                       <ShoppingBag01Icon size={18} />
                       สมัครเปิดร้าน
@@ -389,7 +428,7 @@ setAvatar(null);
                   <Link
                     href="/orders"
                     onClick={() => setIsProfileOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 hover:bg-[#F8F5EE] text-sm font-bold text-earth-dark transition"
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-[#FFF5F7] text-sm font-bold text-[#3B262B] transition"
                   >
                     <PackageIcon size={18} />
                     ประวัติคำสั่งซื้อ
@@ -397,14 +436,14 @@ setAvatar(null);
                   <Link
                     href="/profile"
                     onClick={() => setIsProfileOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 hover:bg-[#F8F5EE] text-sm font-bold text-earth-dark transition"
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-[#FFF5F7] text-sm font-bold text-[#3B262B] transition"
                   >
                     <Settings02Icon size={18} />
                     โปรไฟล์
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#FFF5F5] text-left text-sm font-bold text-red-600 border-t border-gray-100 cursor-pointer"
+                    className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#FFF5F5] text-left text-sm font-bold text-red-600 border-t border-[#FFF0F3] cursor-pointer"
                   >
                     <Logout01Icon size={18} />
                     ออกจากระบบ

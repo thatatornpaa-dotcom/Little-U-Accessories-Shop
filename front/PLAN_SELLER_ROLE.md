@@ -33,7 +33,7 @@
 | 4 | Product ทุกตัวถูกสร้างโดย Employee และ `shopId` เป็น `null` เสมอ | สินค้ายังไม่ผูกกับร้าน seller | `src/modules/product/product.route.js:19-22` |
 | 5 | Upload อนุญาตเฉพาะ Employee | Seller จะอัปโหลดโลโก้/รูปสินค้าไม่ได้ | `src/modules/upload/upload.route.js:8-9` |
 | 6 | Checkout สร้าง `Order` เดียว ไม่ได้แตก `SubOrder` และไม่ผูกร้าน | **Seller Order Fulfillment ยังทำไม่ได้จริง** ต้องรอ Split Order | `src/modules/order/order.controller.js:116-140` |
-| 7 | Frontend ไม่มี AuthContext กลาง, Header อ่าน `localStorage` เอง | ต้องเพิ่ม context เพื่อให้ role/เมนูเปลี่ยนตามสถานะ | `bareandbold_front/src/components/layout/Header.jsx:50-76` |
+| 7 | Frontend ไม่มี AuthContext กลาง, Header อ่าน `localStorage` เอง | ต้องเพิ่ม context เพื่อให้ role/เมนูเปลี่ยนตามสถานะ | `front/src/components/layout/Header.jsx:50-76` |
 | 8 | เรียก API ด้วย Bearer token จาก `localStorage` (cookie ก็มีแต่ `secure + SameSite=None` ใช้บน localhost ไม่ได้) | ใช้งานได้ แต่ควร hardening ทีหลัง | `auth.service.js:3-18`, `auth.controller.js:6-12` |
 | 9 | CORS สะท้อน origin ใดก็ได้พร้อม credentials | ความเสี่ยงความปลอดภัย ควรจำกัด origin | `src/app.js:22-32` |
 

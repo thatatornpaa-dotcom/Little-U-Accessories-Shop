@@ -534,7 +534,7 @@ export default function DocsPage() {
     end
 
     %% Backend API Services
-    subgraph Backend ["Backend API Layer (:8000)"]
+    subgraph Backend ["Backend API Layer (:8001)"]
         AuthService["Auth Service"]
         ProductService["Product Service"]
         OrderService["Order & Cart Service"]

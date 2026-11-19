@@ -8,7 +8,7 @@ const WEB3FORMS_ACCESS_KEY = "88b8fd6b-7615-4101-b456-9b981cbb264e";
 // Clean icons
 const MailIcon = () => (
   <svg
-    className="w-5 h-5 text-[#556B2F]"
+    className="w-5 h-5 text-[#FFE5EC]"
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
@@ -24,7 +24,7 @@ const MailIcon = () => (
 
 const PhoneIcon = () => (
   <svg
-    className="w-5 h-5 text-[#556B2F]"
+    className="w-5 h-5 text-[#FFE5EC]"
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
@@ -40,7 +40,7 @@ const PhoneIcon = () => (
 
 const LocationIcon = () => (
   <svg
-    className="w-5 h-5 text-[#556B2F]"
+    className="w-5 h-5 text-[#FFE5EC]"
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
@@ -61,7 +61,7 @@ const LocationIcon = () => (
 
 const SuccessCheckIcon = () => (
   <svg
-    className="w-16 h-16 text-emerald-500 mx-auto mb-4 animate-bounce"
+    className="w-16 h-16 text-[#E87A90] mx-auto mb-4 animate-bounce"
     fill="none"
     stroke="currentColor"
     strokeWidth="2.5"
@@ -116,15 +116,16 @@ export default function ContactPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json"
+          Accept: "application/json",
         },
         body: JSON.stringify({
           access_key: WEB3FORMS_ACCESS_KEY,
           "ชื่อผู้ติดต่อ": formData.name,
           "อีเมลติดต่อกลับ": formData.email,
           "เบอร์โทรศัพท์": formData.phone || "ไม่ได้ระบุ",
-          "หัวข้อข้อความ": formData.subject || "มีข้อความใหม่จากระบบ Bare & Bold",
-          "รายละเอียดข้อความ": formData.message
+          "หัวข้อข้อความ":
+            formData.subject || "มีข้อความใหม่จากระบบ Little U Accessories Shop",
+          "รายละเอียดข้อความ": formData.message,
         }),
       });
 
@@ -152,18 +153,18 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-[#3C322A] font-anuphan antialiased flex flex-col">
+    <div className="min-h-screen bg-[#FFF9FA] text-[#3B262B] font-anuphan antialiased flex flex-col">
       {/* Hero Section */}
-      <section className="bg-[#F5F0E6]/50 py-16 px-6 border-b border-[#EADECC]/40 text-center">
+      <section className="bg-gradient-to-r from-[#FFF5F7] to-[#FCE8ED] py-16 px-6 border-b border-[#FADCE3] text-center">
         <div className="max-w-[800px] mx-auto space-y-4">
-          <span className="text-[11px] font-extrabold uppercase tracking-[0.25em] text-[#556B2F]">
+          <span className="text-[11px] font-extrabold uppercase tracking-[0.25em] text-[#E87A90]">
             GET IN TOUCH
           </span>
-          <h1 className="text-3xl md:text-5xl font-black tracking-tight text-[#3C322A]">
+          <h1 className="text-3xl md:text-5xl font-black tracking-tight text-[#3B262B]">
             ติดต่อเรา / ส่งข้อความหาเรา
           </h1>
-          <p className="text-sm font-bold text-[#6A5242] leading-relaxed max-w-lg mx-auto">
-            มีข้อสงสัยเกี่ยวกับสร้อยข้อมือคัสตอม สต็อกหินมงคล
+          <p className="text-sm font-bold text-[#6E4750] leading-relaxed max-w-lg mx-auto">
+            มีข้อสงสัยเกี่ยวกับเครื่องประดับและแอคเซสเซอรีคัสตอม สต็อกสินค้า
             หรือต้องการสั่งซื้อชิ้นงานพิเศษ? ส่งข้อความหาเราได้เลย
           </p>
         </div>
@@ -172,22 +173,23 @@ export default function ContactPage() {
       {/* Main Workspace */}
       <main className="max-w-[1200px] mx-auto w-full px-6 py-12 flex-1 flex flex-col justify-center items-center">
         {/* Contact Container Box */}
-        <div className="w-full max-w-[1000px] bg-white rounded-3xl border border-[#EADECC]/60 shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-12">
+        <div className="w-full max-w-[1000px] bg-white rounded-3xl border border-[#FADCE3] shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-12">
           {/* Left Form Panel */}
           <div className="md:col-span-7 p-8 md:p-12 flex flex-col justify-center">
             {isSent ? (
               <div className="text-center py-8 space-y-4 animate-fadeIn">
                 <SuccessCheckIcon />
-                <h3 className="text-2xl font-black text-[#3C322A]">
+                <h3 className="text-2xl font-black text-[#3B262B]">
                   ส่งข้อความสำเร็จแล้ว!
                 </h3>
-                <p className="text-sm font-bold text-[#6A5242] leading-relaxed max-w-sm mx-auto">
-                  ข้อความของคุณถูกส่งไปยังกล่องเมลของทีมงานระบบ Bare & Bold แล้ว
+                <p className="text-sm font-bold text-[#6E4750] leading-relaxed max-w-sm mx-auto">
+                  ข้อความของคุณถูกส่งไปยังกล่องเมลของทีมงานระบบ Little U
+                  Accessories Shop แล้ว
                   เราจะติดต่อคุณกลับผ่านอีเมลโดยเร็วที่สุด
                 </p>
                 <button
                   onClick={() => setIsSent(false)}
-                  className="mt-6 px-6 py-2.5 bg-[#3C322A] hover:bg-[#556B2F] text-white text-sm font-black uppercase tracking-widest transition rounded-lg cursor-pointer"
+                  className="mt-6 px-6 py-2.5 bg-[#E87A90] hover:bg-[#D8657C] text-white text-sm font-black uppercase tracking-widest transition rounded-lg cursor-pointer"
                 >
                   ส่งข้อความเพิ่มเติม
                 </button>
@@ -195,10 +197,10 @@ export default function ContactPage() {
             ) : (
               <div className="space-y-6">
                 <div>
-                  <h2 className="text-2xl font-black text-[#3C322A] tracking-tight">
+                  <h2 className="text-2xl font-black text-[#3B262B] tracking-tight">
                     ส่งเมลหรือข้อความ
                   </h2>
-                  <p className="text-sm text-[#6A5242]/80 font-bold mt-1">
+                  <p className="text-sm text-[#6E4750]/80 font-bold mt-1">
                     กรอกฟอร์มเพื่อติดต่อทีมงานโดยตรง
                   </p>
                 </div>
@@ -206,7 +208,7 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label className="text-xs font-black text-[#6A5242] uppercase tracking-wider block">
+                      <label className="text-xs font-black text-[#6E4750] uppercase tracking-wider block">
                         ชื่อของคุณ *
                       </label>
                       <input
@@ -216,11 +218,11 @@ export default function ContactPage() {
                         placeholder="ชื่อจริง / นามสกุล"
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full bg-[#FDFBF7] border border-[#EADECC]/80 rounded-lg px-3 py-2 text-sm font-bold text-[#3C322A] focus:outline-none focus:border-[#556B2F] focus:ring-1 focus:ring-[#556B2F]/30 transition"
+                        className="w-full bg-[#FFF9FA] border border-[#FADCE3] rounded-lg px-3 py-2 text-sm font-bold text-[#3B262B] focus:outline-none focus:border-[#E87A90] focus:ring-1 focus:ring-[#E87A90]/30 transition"
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-xs font-black text-[#6A5242] uppercase tracking-wider block">
+                      <label className="text-xs font-black text-[#6E4750] uppercase tracking-wider block">
                         อีเมลติดต่อกลับ *
                       </label>
                       <input
@@ -230,14 +232,14 @@ export default function ContactPage() {
                         placeholder="example@mail.com"
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full bg-[#FDFBF7] border border-[#EADECC]/80 rounded-lg px-3 py-2 text-sm font-bold text-[#3C322A] focus:outline-none focus:border-[#556B2F] focus:ring-1 focus:ring-[#556B2F]/30 transition"
+                        className="w-full bg-[#FFF9FA] border border-[#FADCE3] rounded-lg px-3 py-2 text-sm font-bold text-[#3B262B] focus:outline-none focus:border-[#E87A90] focus:ring-1 focus:ring-[#E87A90]/30 transition"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label className="text-xs font-black text-[#6A5242] uppercase tracking-wider block">
+                      <label className="text-xs font-black text-[#6E4750] uppercase tracking-wider block">
                         เบอร์โทรศัพท์
                       </label>
                       <input
@@ -247,11 +249,11 @@ export default function ContactPage() {
                         maxLength="12"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full bg-[#FDFBF7] border border-[#EADECC]/80 rounded-lg px-3 py-2 text-sm font-bold text-[#3C322A] focus:outline-none focus:border-[#556B2F] focus:ring-1 focus:ring-[#556B2F]/30 transition"
+                        className="w-full bg-[#FFF9FA] border border-[#FADCE3] rounded-lg px-3 py-2 text-sm font-bold text-[#3B262B] focus:outline-none focus:border-[#E87A90] focus:ring-1 focus:ring-[#E87A90]/30 transition"
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-xs font-black text-[#6A5242] uppercase tracking-wider block">
+                      <label className="text-xs font-black text-[#6E4750] uppercase tracking-wider block">
                         หัวข้อติดต่อ
                       </label>
                       <input
@@ -260,13 +262,13 @@ export default function ContactPage() {
                         placeholder="สอบถามคัสตอม / ขนส่ง / อื่นๆ"
                         value={formData.subject}
                         onChange={handleChange}
-                        className="w-full bg-[#FDFBF7] border border-[#EADECC]/80 rounded-lg px-3 py-2 text-sm font-bold text-[#3C322A] focus:outline-none focus:border-[#556B2F] focus:ring-1 focus:ring-[#556B2F]/30 transition"
+                        className="w-full bg-[#FFF9FA] border border-[#FADCE3] rounded-lg px-3 py-2 text-sm font-bold text-[#3B262B] focus:outline-none focus:border-[#E87A90] focus:ring-1 focus:ring-[#E87A90]/30 transition"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-black text-[#6A5242] uppercase tracking-wider block">
+                    <label className="text-xs font-black text-[#6E4750] uppercase tracking-wider block">
                       ข้อความ / รายละเอียดที่ต้องการส่ง *
                     </label>
                     <textarea
@@ -276,14 +278,14 @@ export default function ContactPage() {
                       placeholder="เขียนรายละเอียดข้อความสอบถามของท่านที่นี่..."
                       value={formData.message}
                       onChange={handleChange}
-                      className="w-full bg-[#FDFBF7] border border-[#EADECC]/80 rounded-lg px-3 py-2 text-sm font-bold text-[#3C322A] focus:outline-none focus:border-[#556B2F] focus:ring-1 focus:ring-[#556B2F]/30 transition resize-none leading-relaxed"
+                      className="w-full bg-[#FFF9FA] border border-[#FADCE3] rounded-lg px-3 py-2 text-sm font-bold text-[#3B262B] focus:outline-none focus:border-[#E87A90] focus:ring-1 focus:ring-[#E87A90]/30 transition resize-none leading-relaxed"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3 bg-[#3C322A] hover:bg-[#556B2F] text-white text-sm font-black uppercase tracking-widest transition rounded-lg shadow-sm cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full py-3 bg-[#E87A90] hover:bg-[#D8657C] text-white text-sm font-black uppercase tracking-widest transition rounded-lg shadow-sm cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? (
                       <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -300,28 +302,28 @@ export default function ContactPage() {
           </div>
 
           {/* Right Info Panel */}
-          <div className="md:col-span-5 bg-[#3C322A] text-[#FDFBF7] p-8 md:p-12 flex flex-col justify-between space-y-10">
+          <div className="md:col-span-5 bg-gradient-to-br from-[#E87A90] to-[#D8657C] text-white p-8 md:p-12 flex flex-col justify-between space-y-10">
             <div className="space-y-6">
               <div>
                 <h3 className="text-xl font-black uppercase tracking-tight text-white">
                   ข้อมูลการติดต่อ
                 </h3>
-                <p className="text-xs text-[#EADECC]/70 font-bold mt-1">
+                <p className="text-xs text-[#FFE5EC] font-bold mt-1">
                   สามารถติดต่อหรือพบพวกเราได้ที่นี่
                 </p>
               </div>
 
               <div className="space-y-5 text-sm font-bold">
                 <div className="flex items-start gap-3">
-                  <div className="bg-[#EADECC]/10 p-2 rounded-lg mt-0.5">
+                  <div className="bg-white/15 p-2 rounded-lg mt-0.5">
                     <LocationIcon />
                   </div>
                   <div>
                     <h5 className="font-extrabold text-white">
                       สถานที่ตั้งสำนักงาน
                     </h5>
-                    <p className="text-[#EADECC]/90 leading-relaxed mt-1">
-                      โครงการ Bare & Bold (CSI204)
+                    <p className="text-[#FFF5F7] leading-relaxed mt-1">
+                      โครงการ Little U Accessories Shop
                       <br />
                       มหาวิทยาลัยศรีปทุม
                       <br />
@@ -331,38 +333,38 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="bg-[#EADECC]/10 p-2 rounded-lg mt-0.5">
+                  <div className="bg-white/15 p-2 rounded-lg mt-0.5">
                     <PhoneIcon />
                   </div>
                   <div>
                     <h5 className="font-extrabold text-white">สายด่วนติดต่อ</h5>
-                    <p className="text-[#EADECC]/90 leading-relaxed mt-1">
+                    <p className="text-[#FFF5F7] leading-relaxed mt-1">
                       02-564-4440 ต่อ 204
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="bg-[#EADECC]/10 p-2 rounded-lg mt-0.5">
+                  <div className="bg-white/15 p-2 rounded-lg mt-0.5">
                     <MailIcon />
                   </div>
                   <div>
                     <h5 className="font-extrabold text-white">อีเมลกลางระบบ</h5>
-                    <p className="text-[#EADECC]/90 leading-relaxed mt-1">
-                      contact@bareandbold.com
+                    <p className="text-[#FFF5F7] leading-relaxed mt-1">
+                      contact@littleushop.com
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="border-t border-[#EADECC]/15 pt-6 space-y-2">
-              <span className="text-[11px] font-black uppercase tracking-widest text-[#EADECC]/60 block">
-                BARE & BOLD BRAND
+            <div className="border-t border-white/25 pt-6 space-y-2">
+              <span className="text-[11px] font-black uppercase tracking-widest text-[#FFE5EC] block">
+                LITTLE U ACCESSORIES SHOP
               </span>
-              <p className="text-xs text-[#EADECC]/80 font-bold leading-relaxed">
-                ผลิตภัณฑ์กำไลหินมงคลและข้อเท้าแฮนด์เมด
-                ถ่ายทอดเอกลักษณ์ของตัวตนที่เป็นธรรมชาติผ่านรูปแบบสร้อยข้อมือคัสตอม
+              <p className="text-xs text-[#FFF5F7] font-bold leading-relaxed">
+                ร้านเครื่องประดับและแอคเซสเซอรีแฮนด์เมด Small Things Make You
+                Happier ถ่ายทอดความน่ารักและเอกลักษณ์ในสไตล์ของคุณ
               </p>
             </div>
           </div>

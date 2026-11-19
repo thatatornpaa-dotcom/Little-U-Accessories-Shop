@@ -18,7 +18,7 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           script: |
             # 1. ย้ายไปยังโฟลเดอร์ Frontend และดึงโค้ดเวอร์ชันล่าสุด
-            cd /var/www/bareandbold/bareandbold_front
+            cd /var/www/bareandbold/front
             git pull
 
             # 2. ย้ายมาโฟลเดอร์หลักเพื่อ Build และรันตู้คอนเทนเนอร์ตัวใหม่

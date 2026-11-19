@@ -9,9 +9,9 @@
 ## 🏗️ Architecture Overview
 
 ```
-bareandbold_front/      ← หน้าร้านค้า (ลูกค้า)       :3000
-bareandbold_backoffice/ ← หลังบ้าน (Staff/Admin)     :3001
-bareandbold_backend/    ← REST API (Hono/Bun)         :8000
+front/      ← หน้าร้านค้า (ลูกค้า)       :3000
+backoffice/ ← หลังบ้าน (Staff/Admin)     :3001
+backend/    ← REST API (Hono/Bun)         :8000
 ```
 
 ---
@@ -102,7 +102,7 @@ bareandbold_backend/    ← REST API (Hono/Bun)         :8000
 
 ### 🔵 คนที่ 1 — Frontend: หน้าร้านค้า (Product & Homepage)
 
-**รับผิดชอบ:** `bareandbold_front/`
+**รับผิดชอบ:** `front/`
 
 #### งานที่ต้องทำ:
 
@@ -125,7 +125,7 @@ GET /api/accessories
 
 ### 🟢 คนที่ 2 — Frontend: Auth, Cart & Checkout
 
-**รับผิดชอบ:** `bareandbold_front/` (ส่วน auth + cart)
+**รับผิดชอบ:** `front/` (ส่วน auth + cart)
 
 #### งานที่ต้องทำ:
 

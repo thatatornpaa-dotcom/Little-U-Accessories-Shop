@@ -13,10 +13,10 @@
 
 | Role                | ตำแหน่ง                                                 | ดูแลอะไร                                                                                                        | โฟลเดอร์หลัก                                                  | สถานะรวม |
 | ------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ---------------- |
-| 🔵 **Role 1** | Frontend Engineer (Storefront & Catalog) + **Tester/QA** + **เจ้าของ Coupon/Voucher Vertical** | หน้าร้านผู้ซื้อ, ค้นหา/กรอง, หน้าร้าน public, ดูดวง/หินมงคล, คูปองทั้งฝั่ง Buyer/Seller/Admin + test plan/UAT | `bareandbold_front/src/app/(storefront)/` + voucher APIs/schema ที่ได้รับมอบหมาย + `bareandbold_backend/k6/` | 🟡               |
-| 🟢 **Role 2** | Frontend Engineer (Cart, Checkout & Orders)                    | ตะกร้า, ชำระเงิน, ประวัติออเดอร์, ยืนยันรับของ, รีวิว, คืนเงิน                      | `bareandbold_front/src/app/(storefront)/`                               | 🟡               |
-| 🟠 **Role 3** | Fullstack Engineer (Seller Center & Admin)                     | เปิดร้าน, Seller Center, หลังบ้านแอดมิน                                                           | `bareandbold_front/src/app/(seller)/` + `bareandbold_backoffice/`     | 🟡               |
-| 🟣 **Role 4** | Backend & Database Engineer                                    | API, ฐานข้อมูล, เงิน/Escrow, Payment, CI/CD, Deploy                                                               | `bareandbold_backend/`                                                  | 🟡               |
+| 🔵 **Role 1** | Frontend Engineer (Storefront & Catalog) + **Tester/QA** + **เจ้าของ Coupon/Voucher Vertical** | หน้าร้านผู้ซื้อ, ค้นหา/กรอง, หน้าร้าน public, ดูดวง/หินมงคล, คูปองทั้งฝั่ง Buyer/Seller/Admin + test plan/UAT | `front/src/app/(storefront)/` + voucher APIs/schema ที่ได้รับมอบหมาย + `backend/k6/` | 🟡               |
+| 🟢 **Role 2** | Frontend Engineer (Cart, Checkout & Orders)                    | ตะกร้า, ชำระเงิน, ประวัติออเดอร์, ยืนยันรับของ, รีวิว, คืนเงิน                      | `front/src/app/(storefront)/`                               | 🟡               |
+| 🟠 **Role 3** | Fullstack Engineer (Seller Center & Admin)                     | เปิดร้าน, Seller Center, หลังบ้านแอดมิน                                                           | `front/src/app/(seller)/` + `backoffice/`     | 🟡               |
+| 🟣 **Role 4** | Backend & Database Engineer                                    | API, ฐานข้อมูล, เงิน/Escrow, Payment, CI/CD, Deploy                                                               | `backend/`                                                  | 🟡               |
 
 > **Tester ไม่ใช่คนที่ 5:** Role 1 รับบทบาท Tester/QA เพิ่มจากงาน Storefront (ดูข้อ 5)
 > **ทุกคนยังต้องเขียน test case ของฟีเจอร์ตัวเอง** — Role 1 เป็นคนรวบรวม/regression/UAT
@@ -707,7 +707,7 @@ P0 → P1 → P2 → P3 → P5
 cd bareandbold_backend && bun run dev
 
 # Storefront :3000
-cd bareandbold_front && bun run dev
+cd front && bun run dev
 
 # Backoffice :3001
 cd bareandbold_backoffice && bun run dev
