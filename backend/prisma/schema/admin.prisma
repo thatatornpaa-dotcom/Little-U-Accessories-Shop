@@ -1,0 +1,28 @@
+model AdminAuditLog {
+  id         String   @id @default(uuid())
+  actorId    String? // Employee.id ณ เวลาที่ทำรายการ
+  actorEmail String?
+  actorRole  String?
+  action     String // เช่น SHOP_SUSPEND, PRODUCT_HIDE, PAYOUT_TRANSFER
+  targetType String // SHOP, PRODUCT, PAYOUT, SETTINGS
+  targetId   String?
+  reason     String?
+  beforeJson Json?
+  afterJson  Json?
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([targetType, targetId])
+  @@index([action])
+}
+
+model PlatformSetting {
+  id                    String   @id @default(uuid())
+  commissionRate        Decimal  @default(0.05) @db.Decimal(5, 4) // 0.05 = 5%
+  shippingFee           Decimal  @default(50.00) @db.Decimal(10, 2)
+  freeShippingThreshold Decimal  @default(300.00) @db.Decimal(10, 2)
+  version               Int      @default(1)
+  updatedById           String?
+  updatedAt             DateTime @updatedAt
+  createdAt             DateTime @default(now())
+}

@@ -1,0 +1,106 @@
+model Product {
+  id               String    @id @default(uuid())
+  shopId           String? // ร้านค้าเจ้าของสินค้า
+  shop             Shop?     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  name             String
+  description      String?
+  price            Decimal   @db.Decimal(10, 2)
+  originalPrice    Decimal?  @db.Decimal(10, 2) // Original price before discount
+  type             String    @default("READY_TO_SHIP") // "READY_TO_SHIP", "MADE_TO_ORDER"
+  leadTimeDays     Int       @default(0) // ระยะเวลาผลิตสำหรับ Made to Order (เช่น 3, 7, 14 วัน)
+  category         String    @default("BRACELET") // "BRACELET", "ANKLET", "RING", "NECKLACE"
+  stock            Int       @default(0) // Default 0 for MADE_TO_ORDER
+  wristSizeMin     Decimal?  @db.Decimal(4, 1) // e.g. 13.0 cm
+  wristSizeMax     Decimal?  @db.Decimal(4, 1) // e.g. 20.0 cm
+  rating           Decimal   @default(0.0) @db.Decimal(2, 1) // Average rating 0.0 - 5.0
+  reviewCount      Int       @default(0) // Total number of reviews
+  isActive         Boolean   @default(true) // Seller can pause selling without deleting
+  isDeleted        Boolean   @default(false)
+  moderationStatus String    @default("VISIBLE") // "VISIBLE", "HIDDEN", "SUSPENDED"
+  moderationReason String?
+  moderatedById    String? // Employee.id ของ Admin ผู้ตรวจ
+  moderatedAt      DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  images        ProductImage[]
+  customOptions CustomOption[]
+  accessories   ProductAccessory[]
+  cartItems     CartItem[]
+  orderItems    OrderItem[]
+  wishlistItems WishlistItem[]
+  reviews       Review[]
+}
+
+model ProductImage {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  position  Int      @default(0) // Display sequence order (0 = Cover)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Configurable options for Custom products (e.g. "Wrist Size", "Cord Style")
+model CustomOption {
+  id         String   @id @default(uuid())
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name       String // e.g. "Wrist Size", "Cord Style"
+  isRequired Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  values CustomOptionValue[]
+}
+
+model CustomOptionValue {
+  id              String       @id @default(uuid())
+  optionId        String
+  option          CustomOption @relation(fields: [optionId], references: [id], onDelete: Cascade)
+  value           String // e.g., "15 cm", "16 cm"
+  priceAdjustment Decimal      @default(0.00) @db.Decimal(10, 2) // Extra cost if selected
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique // e.g., "CHARM", "BEAD", "CORD", "STONE"
+  description String?
+  isDeleted   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  accessories Accessory[]
+}
+
+// Catalog of charms, beads, cords, stones
+model Accessory {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  price       Decimal  @db.Decimal(10, 2)
+  stock       Int      @default(0)
+  imageUrl    String?
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  isDeleted   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  products         ProductAccessory[]
+  cartAccessories  CartItemAccessory[]
+  orderAccessories OrderItemAccessory[]
+}
+
+// Many-to-many mapping: which accessories are allowed for which custom product
+model ProductAccessory {
+  productId   String
+  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  accessoryId String
+  accessory   Accessory @relation(fields: [accessoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, accessoryId])
+}

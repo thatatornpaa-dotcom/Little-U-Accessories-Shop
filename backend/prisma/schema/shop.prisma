@@ -1,0 +1,70 @@
+model Shop {
+  id                String    @id @default(uuid())
+  ownerId           String    @unique
+  owner             User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  name              String
+  slug              String    @unique // URL slug e.g. /shop/crystal-charms
+  description       String?
+  logoUrl           String?
+  bannerUrl         String?
+  taxId             String? // เลขประจำตัวผู้เสียภาษี
+  idCardUrl         String? // รูปบัตรประชาชน (สำหรับ KYC)
+  bankName          String? // ธนาคาร
+  bankAccountNumber String? // เลขที่บัญชี
+  bankAccountName   String? // ชื่อบัญชี
+  status            String    @default("PENDING") // "PENDING", "APPROVED", "REJECTED", "SUSPENDED"
+  rejectionReason   String?
+  suspendedReason   String? // เหตุผลที่ Admin ระงับร้าน
+  suspendedAt       DateTime?
+  balance           Decimal   @default(0.00) @db.Decimal(10, 2) // ยอดเงินในกระเป๋าเงินร้านค้า (Wallet)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  products     Product[]
+  subOrders    SubOrder[]
+  payouts      PayoutRequest[]
+  transactions ShopTransaction[]
+}
+
+model PayoutRequest {
+  id                String    @id @default(uuid())
+  shopId            String
+  shop              Shop      @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  amount            Decimal   @db.Decimal(10, 2) // จำนวนเงินที่ขอถอน
+  fee               Decimal   @default(0.00) @db.Decimal(10, 2) // ค่าธรรมเนียมการถอน
+  netAmount         Decimal   @db.Decimal(10, 2) // ยอดเงินสุทธิที่โอนจริง
+  bankName          String
+  bankAccountNumber String
+  bankAccountName   String
+  status            String    @default("PENDING") // "PENDING", "APPROVED", "TRANSFERRED", "REJECTED"
+  proofUrl          String? // สลิปหลักฐานการโอนเงินจากแอดมิน
+  transferReference String? // เลขอ้างอิงการโอนจากธนาคาร
+  rejectionReason   String?
+  clientRequestId   String? // Idempotency key จาก Seller
+  processedById     String? // Employee.id ของ Admin ผู้ดำเนินการ
+  processedAt       DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  transaction ShopTransaction?
+
+  @@unique([shopId, clientRequestId])
+  @@index([shopId, status])
+}
+
+model ShopTransaction {
+  id              String         @id @default(uuid())
+  shopId          String
+  shop            Shop           @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  subOrderId      String?
+  subOrder        SubOrder?      @relation(fields: [subOrderId], references: [id], onDelete: SetNull)
+  payoutRequestId String?        @unique
+  payoutRequest   PayoutRequest? @relation(fields: [payoutRequestId], references: [id], onDelete: SetNull)
+  type            String // "SALE", "COMMISSION", "PAYOUT", "REFUND"
+  amount          Decimal        @db.Decimal(10, 2) // บวก = เงินเข้า, ลบ = เงินออก
+  description     String?
+  createdAt       DateTime       @default(now())
+
+  @@unique([subOrderId, type])
+  @@index([shopId, createdAt])
+}

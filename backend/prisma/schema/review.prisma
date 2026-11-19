@@ -1,0 +1,35 @@
+model Review {
+  id          String     @id @default(uuid())
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderItemId String?    @unique // ให้รีวิวได้เฉพาะสินค้าที่สั่งซื้อจริง 1 ครั้งต่อชิ้น (Verified Purchase)
+  orderItem   OrderItem? @relation(fields: [orderItemId], references: [id], onDelete: SetNull)
+  rating      Int        // คะแนนดาว (1 - 5)
+  comment     String?    // ข้อความรีวิว
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  images ReviewImage[]
+}
+
+model ReviewImage {
+  id        String   @id @default(uuid())
+  reviewId  String
+  review    Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  url       String
+  createdAt DateTime @default(now())
+}
+
+model WishlistItem {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+}
+

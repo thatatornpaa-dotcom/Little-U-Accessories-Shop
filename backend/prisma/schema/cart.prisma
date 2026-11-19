@@ -1,0 +1,39 @@
+model Cart {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items CartItem[]
+}
+
+model CartItem {
+  id            String   @id @default(uuid())
+  cartId        String
+  cart          Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId     String
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity      Int      @default(1)
+  customDetails Json? // Options selected (e.g. [{"option": "Wrist Size", "value": "15 cm"}])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  accessories CartItemAccessory[]
+
+  @@unique([cartId, productId])
+}
+
+model CartItemAccessory {
+  id          String    @id @default(uuid())
+  cartItemId  String
+  cartItem    CartItem  @relation(fields: [cartItemId], references: [id], onDelete: Cascade)
+  accessoryId String
+  accessory   Accessory @relation(fields: [accessoryId], references: [id], onDelete: Cascade)
+  quantity    Int       @default(1)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([cartItemId, accessoryId])
+}
+

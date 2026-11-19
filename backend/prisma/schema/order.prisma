@@ -1,0 +1,128 @@
+model Order {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status          String   @default("PENDING") // "PENDING", "PAID", "PROCESSING", "PARTIALLY_SHIPPED", "COMPLETED", "CANCELLED"
+  totalPrice      Decimal  @db.Decimal(10, 2) // Grand total paid by buyer
+  shippingFee     Decimal  @default(0.00) @db.Decimal(10, 2) // Snapshot ค่าส่งรวมของออเดอร์
+  shippingAddress String
+  recipientName   String
+  recipientPhone  String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  items          OrderItem[]
+  subOrders      SubOrder[]
+  payment        Payment?
+  shipping       Shipping?
+  refundRequests RefundRequest[]
+}
+
+model SubOrder {
+  id               String    @id @default(uuid())
+  orderId          String
+  order            Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  shopId           String
+  shop             Shop      @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  subOrderNumber   String    @unique // e.g. "SUB-20261108-XXXX"
+  status           String    @default("PENDING") // "PENDING", "PAID", "PRODUCING", "SHIPPED", "DELIVERED", "COMPLETED", "CANCELLED", "REFUNDED"
+  subtotal         Decimal   @db.Decimal(10, 2) // ราคาสินค้าของร้านนี้
+  shippingFee      Decimal   @default(0.00) @db.Decimal(10, 2)
+  commissionRate   Decimal   @default(0.05) @db.Decimal(5, 4) // เช่น 0.05 (5%)
+  commissionAmount Decimal   @default(0.00) @db.Decimal(10, 2)
+  netAmount        Decimal   @db.Decimal(10, 2) // ยอดสุทธิที่ร้านจะได้รับ = subtotal - commission
+  carrier          String? // ขนส่ง เช่น "ไปรษณีย์ไทย", "Flash Express", "Kerry"
+  trackingNumber   String? // เลขพัสดุ
+  shippedAt        DateTime?
+  deliveredAt      DateTime?
+  completedAt      DateTime? // เวลาที่ผู้ซื้อกดยืนยันรับของ
+  settledAt        DateTime? // เวลาที่เครดิตยอดขายเข้ากระเป๋าร้านแล้ว (กันเครดิตซ้ำ)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  items          OrderItem[]
+  refundRequests RefundRequest[]
+  transactions   ShopTransaction[]
+}
+
+model OrderItem {
+  id            String    @id @default(uuid())
+  orderId       String
+  order         Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  subOrderId    String?
+  subOrder      SubOrder? @relation(fields: [subOrderId], references: [id], onDelete: SetNull)
+  productId     String
+  product       Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity      Int
+  price         Decimal   @db.Decimal(10, 2) // Price at purchase time
+  customDetails Json? // Chosen options (e.g. wrist size 15cm)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accessories OrderItemAccessory[]
+  refundRequests RefundRequest[]
+
+  review      Review?
+}
+
+model OrderItemAccessory {
+  id          String    @id @default(uuid())
+  orderItemId String
+  orderItem   OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  accessoryId String
+  accessory   Accessory @relation(fields: [accessoryId], references: [id], onDelete: Cascade)
+  quantity    Int
+  price       Decimal   @db.Decimal(10, 2) // Snapshotted price
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([orderItemId, accessoryId])
+}
+
+model Payment {
+  id            String    @id @default(uuid())
+  orderId       String    @unique
+  order         Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  amount        Decimal   @db.Decimal(10, 2)
+  paymentMethod String // "PROMPTPAY", "CREDIT_CARD", etc.
+  status        String    @default("PENDING") // "PENDING", "SUCCESS", "FAILED"
+  omiseChargeId String? // Omise charge ID reference
+  paidAt        DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Shipping {
+  id             String    @id @default(uuid())
+  orderId        String    @unique
+  order          Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  trackingNumber String?
+  carrier        String    @default("MockShipping")
+  status         String    @default("PENDING") // "PENDING", "IN_TRANSIT", "DELIVERED", "FAILED"
+  shippedAt      DateTime?
+  deliveredAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model RefundRequest {
+  id         String    @id @default(uuid())
+  orderId    String
+  order      Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  subOrderId String?
+  subOrder   SubOrder? @relation(fields: [subOrderId], references: [id], onDelete: SetNull)
+  orderItemId String?
+  orderItem   OrderItem? @relation(fields: [orderItemId], references: [id], onDelete: SetNull)
+  condition   String?
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reason     String // เหตุผลขอคืนเงิน
+  details    String? // รายละเอียด
+  images     String[] // รูปภาพหลักฐาน (Cloudflare R2 URLs)
+  amount     Decimal   @db.Decimal(10, 2)
+  status     String    @default("PENDING") // "PENDING", "APPROVED", "REJECTED"
+  adminNote  String?
+  resolvedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}

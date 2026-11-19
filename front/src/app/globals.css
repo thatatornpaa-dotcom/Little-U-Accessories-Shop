@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@100..700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --background: #FDFBF7;
+  --foreground: #3C322A;
+}
+
+@theme {
+  --color-earth-cream: #FDFBF7;
+  --color-earth-beige: #F5F0E6;
+  --color-earth-walnut: #6A5242;
+  --color-earth-olive: #556B2F;
+  --color-earth-dark: #3C322A;
+  --color-earth-border: #EADECC;
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-anuphan: 'Anuphan', sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Anuphan', 'Outfit', 'Inter', Arial, Helvetica, sans-serif;
+}
+

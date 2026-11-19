@@ -1,0 +1,43 @@
+name: Deploy Backend to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploying via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            # 1. ย้ายไปยังโฟลเดอร์ Backend และดึงโค้ดเวอร์ชันล่าสุด
+            cd /var/www/bareandbold/bareandbold_backend
+            git pull
+
+            # 2. ย้ายมาโฟลเดอร์หลักเพื่อ Build และเริ่มทำงานตู้คอนเทนเนอร์ใหม่
+            cd /var/www/bareandbold
+            docker compose up -d --build backend
+
+            # 3. สั่งรัน Prisma Database Migration ในแบบ Deploy
+            docker compose exec -T backend bunx prisma migrate deploy
+
+      - name: Send Discord Notification (Success)
+        if: success()
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d '{"embeds": [{"title": "🚀 Backend Deployment Success!", "description": "The backend has been successfully updated and deployed on VPS.", "color": 3066993, "fields": [{"name": "Commit Message", "value": "${{ github.event.head_commit.message }}"}, {"name": "Author", "value": "${{ github.event.head_commit.author.name }}"}]}]}' \
+          ${{ secrets.DISCORD_WEBHOOK }}
+
+      - name: Send Discord Notification (Failure)
+        if: failure()
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d '{"embeds": [{"title": "❌ Backend Deployment Failed!", "description": "Backend deployment failed on VPS. Please inspect GitHub Actions logs.", "color": 15158332, "fields": [{"name": "Commit Message", "value": "${{ github.event.head_commit.message }}"}]}]}' \
+          ${{ secrets.DISCORD_WEBHOOK }}

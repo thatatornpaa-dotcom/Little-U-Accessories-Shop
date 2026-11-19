@@ -1,0 +1,226 @@
+classDiagram
+    direction TB
+
+    %% ==========================================
+    %% 1. ENTITIES / MODELS (Database Schema)
+    %% ==========================================
+    class User {
+        +String id
+        +String email
+        +String password
+        +String firstName
+        +String lastName
+        +String phone
+        +String address
+        +DateTime createdAt
+        +DateTime updatedAt
+    }
+
+    class Employee {
+        +String id
+        +String email
+        +String password
+        +String firstName
+        +String lastName
+        +String role
+        +Boolean isDeleted
+        +DateTime createdAt
+    }
+
+    class Product {
+        +String id
+        +String name
+        +String description
+        +Decimal price
+        +Decimal originalPrice
+        +String type
+        +String category
+        +Int stock
+        +Boolean isDeleted
+        +DateTime createdAt
+    }
+
+    class ProductImage {
+        +String id
+        +String productId
+        +String url
+        +Int position
+    }
+
+    class CustomOption {
+        +String id
+        +String productId
+        +String name
+        +Boolean isRequired
+    }
+
+    class CustomOptionValue {
+        +String id
+        +String optionId
+        +String value
+        +Decimal priceAdjustment
+    }
+
+    class Category {
+        +String id
+        +String name
+        +String description
+        +Boolean isDeleted
+    }
+
+    class CartItem {
+        +String id
+        +String productId
+        +String name
+        +Decimal price
+        +Int quantity
+        +String image
+        +List~String~ accessories
+    }
+
+    class Order {
+        +String id
+        +String userId
+        +String status
+        +Decimal totalAmount
+        +String shippingAddress
+        +String trackingNumber
+        +DateTime createdAt
+    }
+
+    class OrderItem {
+        +String id
+        +String orderId
+        +String productId
+        +Int quantity
+        +Decimal price
+        +List~String~ accessories
+    }
+
+    %% ==========================================
+    %% 2. SERVICES & HOOKS (API & State)
+    %% ==========================================
+    class AuthService {
+        <<service>>
+        +register(email, password, firstName, lastName) Promise
+        +login(email, password) Promise
+        +registerBackoffice(email, password, firstName, lastName) Promise
+        +loginBackoffice(email, password) Promise
+        +getProfile(token) Promise
+        +logout() Promise
+    }
+
+    class ProductService {
+        <<service>>
+        +getProducts() Promise
+        +getProductById(id) Promise
+        +getProductRecommendations(id) Promise
+    }
+
+    class UseAuth {
+        <<hook>>
+        +User user
+        +Boolean loading
+        +login(email, password) Promise
+        +logout() Promise
+        +fetchProfile() Promise
+    }
+
+    %% ==========================================
+    %% 3. FRONTEND COMPONENTS (React/Next.js)
+    %% ==========================================
+    class ProductsPage {
+        <<component>>
+        -List~Product~ products
+        -Boolean loading
+        -String search
+        -String category
+        -String type
+        +fetchProducts()
+    }
+
+    class ProductDetailPage {
+        <<component>>
+        +Object params
+    }
+
+    class ProductDetailClient {
+        <<component>>
+        +String nameSlug
+        -Product product
+        -List~Product~ recommendedProducts
+        -Int qty
+        -String size
+        +addToCart()
+    }
+
+    class Header {
+        <<component>>
+        -Boolean isAuthModalOpen
+        -Boolean isCartOpen
+    }
+
+    class CartDrawer {
+        <<component>>
+        +Boolean isOpen
+        +Function onClose
+        -List~CartItem~ cartItems
+        +removeItem(id)
+    }
+
+    class AuthModal {
+        <<component>>
+        +Boolean isOpen
+        +Function onClose
+        -String mode
+        -String email
+        -String password
+        +handleSubmit(e)
+    }
+
+    class ProductGrid {
+        <<component>>
+        +List~Product~ products
+    }
+
+    class ProductFilter {
+        <<component>>
+        +String search
+        +Function setSearch
+        +String category
+        +Function setCategory
+    }
+
+    class ProductCard {
+        <<component>>
+        +Product product
+    }
+
+    %% ==========================================
+    %% 4. UML RELATIONSHIPS
+    %% ==========================================
+    
+    %% Database Relations
+    Product "1" *--> "*" ProductImage : has
+    Product "1" *--> "*" CustomOption : has
+    CustomOption "1" *--> "*" CustomOptionValue : has
+    Order "1" *--> "*" OrderItem : contains
+    User "1" o--> "*" Order : places
+
+    %% Component Composition (Storefront)
+    ProductsPage "1" *--> "1" ProductFilter : includes
+    ProductsPage "1" *--> "1" ProductGrid : includes
+    ProductGrid "1" o--> "*" ProductCard : renders list of
+    Header "1" *--> "1" AuthModal : contains
+    Header "1" *--> "1" CartDrawer : contains
+
+    %% Data Associations
+    ProductCard "1" --> "1" Product : displays
+    ProductDetailClient "1" --> "1" Product : displays
+    CartDrawer "1" o--> "*" CartItem : displays
+
+    %% Service Dependencies
+    ProductsPage ..> ProductService : uses
+    ProductDetailClient ..> ProductService : uses
+    AuthModal ..> UseAuth : invokes
+    UseAuth ..> AuthService : relies on
