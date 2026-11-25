@@ -362,7 +362,7 @@ const handleReturnFormSubmit = (event) => {
                 <div className="px-6 py-4 flex flex-wrap justify-between items-center gap-3 border-b" style={{ borderColor: `${BORDER}40`, background: `${BEIGE}15` }}>
                   <div className="flex items-center gap-2 flex-wrap">
                     <Store size={16} style={{ color: WALNUT }} />
-                    <span className="font-bold text-sm tracking-wide" style={{ color: DARK }}>BARE & BOLD</span>
+                    <span className="font-bold text-sm tracking-wide" style={{ color: DARK }}>LITTLE U</span>
                     <span className="text-xs ml-3 text-zinc-400 font-mono">ORDER: {order.id}</span>
                   </div>
                   <div className="flex items-center gap-3 flex-wrap">

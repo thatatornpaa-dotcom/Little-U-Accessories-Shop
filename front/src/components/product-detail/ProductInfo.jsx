@@ -36,7 +36,7 @@ export default function ProductInfo({
       <div>
         {/* Category / Breadcrumb mini tag */}
         <div className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">
-          <span>Bare & Bold</span>
+          <span>LITTLE U</span>
           <span className="w-1 h-1 rounded-full bg-gray-300" />
           <span>{product.category === "ANKLET" ? "กำไลข้อเท้า" : "กำไลข้อมือ"}</span>
         </div>

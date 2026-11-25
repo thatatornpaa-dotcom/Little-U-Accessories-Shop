@@ -1,4 +1,4 @@
-# 📋 PROJECT_TASKS — Bare & Bold Marketplace
+# 📋 PROJECT_TASKS — LITTLE U Marketplace
 
 > อัปเดตล่าสุด: **12 พ.ย. 2026**
 > ทีม **4 คน** · เป้าหมาย: ปิด Marketplace flow, Seller Center, Admin Core และระบบคูปอง

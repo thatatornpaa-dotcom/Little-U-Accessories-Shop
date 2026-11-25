@@ -657,7 +657,7 @@ export default function ApiDocsPage() {
             </div>
 
             <div className="border-t border-[#EADECC]/60 pt-6 space-y-2">
-              <span className="text-[10px] font-black uppercase tracking-wider text-[#6A5242]">BARE & BOLD</span>
+              <span className="text-[10px] font-black uppercase tracking-wider text-[#6A5242]">LITTLE U</span>
               <p className="text-xs text-[#6A5242]/90 leading-relaxed font-bold">
                 ระบบร้านค้าออนไลน์และคัสตอมสร้อยข้อมือเฉพาะบุคคลแบบสั่งตัด (Made-to-Order)
               </p>

@@ -23,7 +23,6 @@ const NAV_LINKS = [
   { label: "ร้านค้า", href: "/products" },
   { label: "ติดต่อเรา", href: "/contact" },
   { label: "เอกสารระบบ", href: "/docs" },
-  { label: "การ์ดสุ่มดวง", href: "/fortune-card" },
 ];
 
 export default function Header({
@@ -47,7 +46,6 @@ export default function Header({
 
   const {
     user: authUser,
-    shop,
     isLoggedIn: contextLoggedIn,
     loading: authLoading,
     logout: contextLogout,
@@ -384,46 +382,6 @@ export default function Header({
                         : localStorage.getItem("bare_user_email")}
                     </p>
                   </div>
-
-                  {/* Seller zone */}
-                  {shop?.status === "APPROVED" ? (
-                    <>
-                      <Link
-                        href="/seller"
-                        onClick={() => setIsProfileOpen(false)}
-                        className="flex items-center gap-3 px-4 py-3 hover:bg-[#FFF5F7] text-sm font-bold text-[#E87A90] transition"
-                      >
-                        <Settings02Icon size={18} />
-                        Seller Center
-                      </Link>
-                      <Link
-                        href={`/shop/${shop.slug}`}
-                        onClick={() => setIsProfileOpen(false)}
-                        className="flex items-center gap-3 px-4 py-3 hover:bg-[#FFF5F7] text-sm font-bold text-[#3B262B] transition"
-                      >
-                        <ShoppingBag01Icon size={18} />
-                        ดูร้านของฉัน
-                      </Link>
-                    </>
-                  ) : shop ? (
-                    <Link
-                      href="/become-seller"
-                      onClick={() => setIsProfileOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-[#FFF5F7] text-sm font-bold text-amber-600 transition"
-                    >
-                      <ShoppingBag01Icon size={18} />
-                      ร้านรอการอนุมัติ
-                    </Link>
-                  ) : (
-                    <Link
-                      href="/become-seller"
-                      onClick={() => setIsProfileOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-[#FFF5F7] text-sm font-bold text-[#3B262B] transition"
-                    >
-                      <ShoppingBag01Icon size={18} />
-                      สมัครเปิดร้าน
-                    </Link>
-                  )}
 
                   <Link
                     href="/orders"

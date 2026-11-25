@@ -8,8 +8,6 @@ import {
   UserGroupIcon,
   Settings01Icon,
   Tag01Icon,
-  Store01Icon,
-  Wallet01Icon,
   Audit01Icon
 } from "hugeicons-react";
 
@@ -25,17 +23,10 @@ export default function Sidebar({ user, activeTab, logout }) {
     {
       title: "จัดการร้านค้า",
       items: [
-        { id: "shops", label: "ร้านค้า / อนุมัติร้าน", icon: Store01Icon, adminOnly: false },
         { id: "products", label: "รายการสินค้า", icon: PackageIcon, adminOnly: false },
         { id: "customization", label: "การปรับแต่งสินค้า", icon: Tag01Icon, adminOnly: false },
         { id: "orders", label: "รายการสั่งซื้อ", icon: ShoppingBag01Icon, adminOnly: false },
         { id: "customers", label: "ข้อมูลลูกค้า", icon: UserGroupIcon, adminOnly: false },
-      ],
-    },
-    {
-      title: "ระบบการเงิน",
-      items: [
-        { id: "payouts", label: "คำขอถอนเงิน", icon: Wallet01Icon, adminOnly: true },
       ],
     },
     {
@@ -51,21 +42,24 @@ export default function Sidebar({ user, activeTab, logout }) {
   const isAdmin = user?.role === "admin";
 
   return (
-    <aside className="w-72 bg-white border-r border-gray-200 flex flex-col justify-between py-6 px-4 shrink-0 shadow-sm">
+    <aside className="w-72 bg-[#FFF9FA] border-r border-[#F7DCE2] flex flex-col justify-between py-6 px-4 shrink-0 shadow-sm">
       <div>
         {/* Logo */}
         <div className="mb-8 px-2">
-          <div className="flex items-center gap-2.5 text-neutral-900 select-none">
-            <svg className="w-6 h-6 transition-transform duration-300 hover:rotate-12 text-[#6B7A4E]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" />
-              <path d="M8.5 12C8.5 13.933 10.067 15.5 12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12Z" fill="currentColor" />
-              <path d="M12 5C8.134 5 5 8.134 5 12C5 15.866 8.134 19 12 19C15.866 19 19 15.866 19 12C19 8.134 15.866 5 12 5Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+          <div className="flex items-center gap-2.5 text-[#3B262B] select-none">
+            <svg
+              className="w-6 h-6 transition-transform duration-300 hover:scale-110 text-[#E06D85]"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
             </svg>
-            <span className="text-xl font-bold uppercase tracking-[0.15em] font-sans">
-              Bare & Bold
+            <span className="text-xl font-bold uppercase tracking-[0.15em] font-sans text-[#3B262B]">
+              Little U
             </span>
           </div>
-          <p className="text-[10px] text-gray-400 font-semibold tracking-widest uppercase mt-1.5 ml-8.5">
+          <p className="text-[10px] text-[#C9566F] font-semibold tracking-widest uppercase mt-1.5 ml-8.5">
             Backoffice Portal
           </p>
         </div>
@@ -97,11 +91,11 @@ export default function Sidebar({ user, activeTab, logout }) {
                         key={item.id}
                         href={href}
                         className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${isActive
-                            ? "bg-brand/10 text-brand font-semibold"
-                            : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                            ? "bg-[#FFF5F7] text-[#E06D85] font-semibold"
+                            : "text-[#3B262B]/75 hover:bg-[#FFF5F7]/70 hover:text-[#3B262B]"
                           }`}
                       >
-                        <IconComponent size={18} className={isActive ? "text-brand" : "text-gray-400"} />
+                        <IconComponent size={18} className={isActive ? "text-[#E06D85]" : "text-gray-400"} />
                         <span>{item.label}</span>
                       </Link>
                     );
@@ -114,17 +108,17 @@ export default function Sidebar({ user, activeTab, logout }) {
       </div>
 
       {/* Sidebar Footer / User Profile & Logout */}
-      <div className="border-t border-gray-100 pt-4 space-y-4">
+      <div className="border-t border-[#F7DCE2] pt-4 space-y-4">
         <div className="flex items-center gap-3 px-2">
-          <div className="w-10 h-10 rounded-full bg-brand/10 flex items-center justify-center text-brand font-bold text-base border border-brand/20">
+          <div className="w-10 h-10 rounded-full bg-[#FFF5F7] flex items-center justify-center text-[#E06D85] font-bold text-base border border-[#F7DCE2]">
             {user?.firstName ? user.firstName[0].toUpperCase() : <UserIcon size={18} />}
           </div>
           <div className="overflow-hidden flex-1">
-            <span className="block text-sm font-bold text-gray-800 truncate">
+            <span className="block text-sm font-bold text-[#3B262B] truncate">
               {user?.firstName} {user?.lastName}
             </span>
             {isAdmin ? (
-              <span className="inline-block mt-0.5 text-[10px] font-bold px-1.5 py-0.5 rounded bg-brand/10 text-brand border border-brand/20">
+              <span className="inline-block mt-0.5 text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#FFF5F7] text-[#E06D85] border border-[#F7DCE2]">
                 Admin
               </span>
             ) : (
@@ -137,7 +131,7 @@ export default function Sidebar({ user, activeTab, logout }) {
 
         <button
           onClick={logout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-rose-600 hover:bg-rose-50 hover:text-rose-700 transition-colors cursor-pointer border border-transparent hover:border-rose-100"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-[#C9566F] hover:bg-[#FFF5F7] hover:text-[#E06D85] transition-colors cursor-pointer border border-transparent hover:border-[#F7DCE2]"
         >
           <Logout01Icon size={18} />
           <span>ออกจากระบบ</span>

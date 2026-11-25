@@ -5,10 +5,10 @@ export default function PrintableReceipt({ order, subtotal, shippingFee, netTota
         {/* Header */}
         <div className="flex justify-between items-start border-b border-neutral-300 pb-5">
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-neutral-900">BARE & BOLD</h1>
+            <h1 className="text-xl font-bold tracking-tight text-neutral-900">LITTLE U</h1>
             <p className="text-[11px] text-neutral-500 mt-1">
               ระบบร้านค้าสร้อยข้อมือคัสตอมออนไลน์เฉพาะบุคคล<br />
-              support@bareandbold.com | bareandbold.com
+              support@littleuaccessories.com | littleuaccessories.com
             </p>
           </div>
           <div className="text-right">
@@ -123,7 +123,7 @@ export default function PrintableReceipt({ order, subtotal, shippingFee, netTota
 
         {/* Footer Note */}
         <div className="text-center text-[10px] text-neutral-400 mt-20 border-t border-neutral-200 pt-6">
-          <p className="font-semibold text-neutral-500">THANK YOU FOR SUPPORTING BARE & BOLD</p>
+          <p className="font-semibold text-neutral-500">THANK YOU FOR SUPPORTING LITTLE U</p>
           <p className="mt-1">ใบเสร็จรับเงินอย่างเป็นทางการสำหรับการสั่งซื้อเครื่องประดับสายงานทำมือ</p>
         </div>
       </div>

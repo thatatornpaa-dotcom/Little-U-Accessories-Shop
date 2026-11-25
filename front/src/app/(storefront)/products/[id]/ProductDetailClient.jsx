@@ -164,7 +164,7 @@ export default function ProductDetailClient({ nameSlug }) {
         image: currentImage,
         price: unitPrice,
         shopId: product.shop?.id || null,
-        shopName: product.shop?.name || "Bare & Bold",
+        shopName: product.shop?.name || "LITTLE U",
       });
       showToast("เพิ่มลงตะกร้าสินค้าเรียบร้อยแล้ว", "success");
     } catch (error) {
@@ -195,7 +195,7 @@ export default function ProductDetailClient({ nameSlug }) {
         image: currentImage,
         price: unitPrice,
         shopId: product.shop?.id || null,
-        shopName: product.shop?.name || "Bare & Bold",
+        shopName: product.shop?.name || "LITTLE U",
       });
       router.push("/checkout");
     } catch (error) {

@@ -173,8 +173,8 @@ async function main() {
   const shop1 = await prisma.shop.create({
     data: {
       ownerId: sellerUser1.id,
-      name: "Bare & Bold Official",
-      slug: "bare-and-bold",
+      name: "Little U Accessories Official",
+      slug: "little-u-accessories",
       description: "สตูดิโอเครื่องประดับกำไลข้อมือเงินแท้ 925 และงานแฮนด์เมดเชือกถักมินิมอลยอดนิยม",
       logoUrl: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=300",
       bannerUrl: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1200",

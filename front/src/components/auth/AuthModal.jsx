@@ -96,17 +96,9 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
     try {
       const data = await authService.login(email, password);
       localStorage.setItem("bare_auth_token", data.token);
-      
+      localStorage.setItem("bare_user", JSON.stringify(data.user));
+      localStorage.setItem("bare_user_email", data.user.email);
 
-localStorage.setItem(
-  "bare_user",
-  JSON.stringify(data.user)
-);
-
-localStorage.setItem(
-  "bare_user_email",
-  data.user.email
-);
       setUser(data.user);
       setAuthState("dashboard");
       setPassword("");
@@ -123,27 +115,27 @@ localStorage.setItem(
   };
 
   const handleSignOut = () => {
-  localStorage.removeItem("bare_auth_token");
-  localStorage.removeItem("bare_user");
-  localStorage.removeItem("bare_user_email");
-  localStorage.removeItem("profile");
-  localStorage.removeItem("avatar");
-  localStorage.removeItem("addresses");
-  localStorage.removeItem("bare_cart");
+    localStorage.removeItem("bare_auth_token");
+    localStorage.removeItem("bare_user");
+    localStorage.removeItem("bare_user_email");
+    localStorage.removeItem("profile");
+    localStorage.removeItem("avatar");
+    localStorage.removeItem("addresses");
+    localStorage.removeItem("bare_cart");
 
-  window.dispatchEvent(new Event("cartUpdated"));
+    window.dispatchEvent(new Event("cartUpdated"));
 
-  setUser(null);
-  setEmail("");
-  setPassword("");
-  setFirstName("");
-  setLastName("");
-  setErrorMsg("");
-  setSuccessMsg("");
-  setAuthState("login");
+    setUser(null);
+    setEmail("");
+    setPassword("");
+    setFirstName("");
+    setLastName("");
+    setErrorMsg("");
+    setSuccessMsg("");
+    setAuthState("login");
 
-  if (onAuthSuccess) onAuthSuccess(null);
-};
+    if (onAuthSuccess) onAuthSuccess(null);
+  };
 
   return (
     <div 
@@ -153,13 +145,13 @@ localStorage.setItem(
     >
       {/* Backdrop with Blur */}
       <div 
-        className="absolute inset-0 bg-[#3C322A]/50 backdrop-blur-sm transition-opacity duration-300"
+        className="absolute inset-0 bg-[#3B262B]/40 backdrop-blur-sm transition-opacity duration-300"
         onClick={onClose}
       />
 
       {/* Modal Container */}
       <div 
-        className={`relative z-10 w-full max-w-md mx-4 p-6 md:p-8 rounded-2xl bg-[#FFFFFF] border border-[#F5F0E6] shadow-2xl transition-all duration-300 transform ${
+        className={`relative z-10 w-full max-w-md mx-4 p-6 md:p-8 rounded-2xl bg-[#FFF9FA] border border-[#F7DCE2] shadow-2xl transition-all duration-300 transform ${
           isOpen ? "scale-100 translate-y-0 opacity-100" : "scale-95 translate-y-4 opacity-0"
         } flex flex-col gap-6`}
       >
@@ -167,7 +159,7 @@ localStorage.setItem(
         {/* Close Button */}
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 text-[#777777] hover:text-[#3C322A] p-2 rounded-full hover:bg-[#F5F0E6] transition duration-200 cursor-pointer"
+          className="absolute top-4 right-4 text-[#C9566F] hover:text-[#3B262B] p-2 rounded-full hover:bg-[#FFF5F7] transition duration-200 cursor-pointer"
           aria-label="Close"
         >
           <svg className="w-5.5 h-5.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
@@ -177,19 +169,22 @@ localStorage.setItem(
 
         {/* Brand Header */}
         <div className="flex flex-col items-center gap-2 text-center">
-          <h1 className="text-2xl font-black tracking-widest text-[#3C322A] uppercase">
-            BARE & BOLD
+          <h1 className="text-2xl font-black tracking-widest text-[#3B262B] uppercase flex items-center justify-center gap-2">
+            <svg className="w-5 h-5 text-[#E06D85]" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+            </svg>
+            <span>LITTLE U</span>
           </h1>
-          <p className="text-xs md:text-sm text-[#556B2F] max-w-xs leading-relaxed font-bold">
+          <p className="text-xs md:text-sm text-[#C9566F] max-w-xs leading-relaxed font-bold">
             {authState === "dashboard" ? "โปรไฟล์ของคุณ" : "เข้าถึงโปรไฟล์ ประวัติการสั่งซื้อ และสิทธิพิเศษของคุณ"}
           </p>
         </div>
 
-        {/* loading indicator */}
+        {/* Loading indicator */}
         {loading && !user && (
           <div className="flex flex-col items-center justify-center py-10 gap-3">
-            <div className="w-6 h-6 rounded-full border-2 border-[#F5F0E6] border-t-[#6A5242] animate-spin" />
-            <span className="text-sm text-[#556B2F] font-bold">กำลังเชื่อมต่อระบบอย่างปลอดภัย...</span>
+            <div className="w-6 h-6 rounded-full border-2 border-[#F7DCE2] border-t-[#E06D85] animate-spin" />
+            <span className="text-sm text-[#C9566F] font-bold">กำลังเชื่อมต่อระบบอย่างปลอดภัย...</span>
           </div>
         )}
 
@@ -200,50 +195,50 @@ localStorage.setItem(
             {authState === "login" && (
               <form onSubmit={handleLogin} className="space-y-5">
                 <div className="text-center mb-5">
-                  <h2 className="text-base md:text-lg font-extrabold text-[#3C322A] uppercase tracking-wider">เข้าสู่ระบบ</h2>
-                  <p className="text-xs md:text-sm text-[#556B2F] mt-1 font-semibold">กรอกข้อมูลของคุณเพื่อดำเนินการต่อ</p>
+                  <h2 className="text-base md:text-lg font-extrabold text-[#3B262B] uppercase tracking-wider">เข้าสู่ระบบ</h2>
+                  <p className="text-xs md:text-sm text-[#3B262B]/70 mt-1 font-semibold">กรอกข้อมูลของคุณเพื่อดำเนินการต่อ</p>
                 </div>
 
                 {errorMsg && (
-                  <div className="p-3.5 text-sm bg-rose-50 border border-rose-100 text-rose-600 rounded-lg font-medium">
+                  <div className="p-3.5 text-sm bg-rose-50 border border-rose-200 text-rose-600 rounded-lg font-medium">
                     {errorMsg}
                   </div>
                 )}
 
                 <div className="space-y-4">
                   <div className="space-y-1.5">
-                    <label className="text-[11px] md:text-xs uppercase font-extrabold tracking-widest text-[#556B2F]">อีเมล</label>
+                    <label className="text-[11px] md:text-xs uppercase font-extrabold tracking-widest text-[#C9566F]">อีเมล</label>
                     <input
                       type="email"
                       required
                       placeholder="you@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-[#FFFFFF] border border-[#F5F0E6] focus:border-[#6A5242] outline-none rounded-lg px-4 py-2.5 text-sm text-[#3C322A] transition"
+                      className="w-full bg-white border border-[#F7DCE2] focus:border-[#E06D85] outline-none rounded-lg px-4 py-2.5 text-sm text-[#3B262B] transition"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-[11px] md:text-xs uppercase font-extrabold tracking-widest text-[#556B2F]">รหัสผ่าน</label>
+                    <label className="text-[11px] md:text-xs uppercase font-extrabold tracking-widest text-[#C9566F]">รหัสผ่าน</label>
                     <input
                       type="password"
                       required
                       placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-[#FFFFFF] border border-[#F5F0E6] focus:border-[#6A5242] outline-none rounded-lg px-4 py-2.5 text-sm text-[#3C322A] transition"
+                      className="w-full bg-white border border-[#F7DCE2] focus:border-[#E06D85] outline-none rounded-lg px-4 py-2.5 text-sm text-[#3B262B] transition"
                     />
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full mt-5 py-3 bg-[#6A5242] hover:bg-[#523e31] text-[#FDFBF7] text-sm font-extrabold uppercase tracking-wider rounded-lg transition duration-200 cursor-pointer shadow-sm"
+                  className="w-full mt-5 py-3 bg-[#E06D85] hover:bg-[#C9566F] text-white text-sm font-extrabold uppercase tracking-wider rounded-lg transition duration-200 cursor-pointer shadow-sm"
                 >
                   เข้าสู่ระบบ
                 </button>
 
-                <p className="text-center text-sm text-[#556B2F] mt-5 font-semibold">
+                <p className="text-center text-sm text-[#3B262B]/75 mt-5 font-semibold">
                   ยังไม่มีบัญชีใช่ไหม?{" "}
                   <button
                     type="button"
@@ -252,7 +247,7 @@ localStorage.setItem(
                       setErrorMsg("");
                       setSuccessMsg("");
                     }}
-                    className="text-[#6A5242] hover:underline font-extrabold cursor-pointer ml-1"
+                    className="text-[#E06D85] hover:text-[#C9566F] hover:underline font-extrabold cursor-pointer ml-1"
                   >
                     สมัครสมาชิก
                   </button>
@@ -264,80 +259,80 @@ localStorage.setItem(
             {authState === "register" && (
               <form onSubmit={handleRegister} className="space-y-4">
                 <div className="text-center mb-4">
-                  <h2 className="text-base md:text-lg font-extrabold text-[#3C322A] uppercase tracking-wider">สร้างบัญชีใหม่</h2>
-                  <p className="text-xs md:text-sm text-[#556B2F] mt-1 font-semibold">ลงทะเบียนเพื่อสร้างโปรไฟล์ของคุณ</p>
+                  <h2 className="text-base md:text-lg font-extrabold text-[#3B262B] uppercase tracking-wider">สร้างบัญชีใหม่</h2>
+                  <p className="text-xs md:text-sm text-[#3B262B]/70 mt-1 font-semibold">ลงทะเบียนเพื่อสร้างโปรไฟล์ของคุณ</p>
                 </div>
 
                 {errorMsg && (
-                  <div className="p-3.5 text-sm bg-rose-50 border border-rose-100 text-rose-600 rounded-lg font-medium">
+                  <div className="p-3.5 text-sm bg-rose-50 border border-rose-200 text-rose-600 rounded-lg font-medium">
                     {errorMsg}
                   </div>
                 )}
                 {successMsg && (
-                  <div className="p-3.5 text-sm bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-lg font-medium">
+                  <div className="p-3.5 text-sm bg-[#FFF5F7] border border-[#F7DCE2] text-[#E06D85] rounded-lg font-medium">
                     {successMsg}
                   </div>
                 )}
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-[11px] md:text-xs uppercase font-extrabold tracking-widest text-[#556B2F]">ชื่อ</label>
+                    <label className="text-[11px] md:text-xs uppercase font-extrabold tracking-widest text-[#C9566F]">ชื่อ</label>
                     <input
                       type="text"
                       required
                       placeholder="สมชาย"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      className="w-full bg-[#FFFFFF] border border-[#F5F0E6] focus:border-[#6A5242] outline-none rounded-lg px-4 py-2.5 text-sm text-[#3C322A] transition"
+                      className="w-full bg-white border border-[#F7DCE2] focus:border-[#E06D85] outline-none rounded-lg px-4 py-2.5 text-sm text-[#3B262B] transition"
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-[11px] md:text-xs uppercase font-extrabold tracking-widest text-[#556B2F]">นามสกุล</label>
+                    <label className="text-[11px] md:text-xs uppercase font-extrabold tracking-widest text-[#C9566F]">นามสกุล</label>
                     <input
                       type="text"
                       required
                       placeholder="ใจดี"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      className="w-full bg-[#FFFFFF] border border-[#F5F0E6] focus:border-[#6A5242] outline-none rounded-lg px-4 py-2.5 text-sm text-[#3C322A] transition"
+                      className="w-full bg-white border border-[#F7DCE2] focus:border-[#E06D85] outline-none rounded-lg px-4 py-2.5 text-sm text-[#3B262B] transition"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-4">
                   <div className="space-y-1.5">
-                    <label className="text-[11px] md:text-xs uppercase font-extrabold tracking-widest text-[#556B2F]">อีเมล</label>
+                    <label className="text-[11px] md:text-xs uppercase font-extrabold tracking-widest text-[#C9566F]">อีเมล</label>
                     <input
                       type="email"
                       required
-                      placeholder="john@example.com"
+                      placeholder="you@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-[#FFFFFF] border border-[#F5F0E6] focus:border-[#6A5242] outline-none rounded-lg px-4 py-2.5 text-sm text-[#3C322A] transition"
+                      className="w-full bg-white border border-[#F7DCE2] focus:border-[#E06D85] outline-none rounded-lg px-4 py-2.5 text-sm text-[#3B262B] transition"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-[11px] md:text-xs uppercase font-extrabold tracking-widest text-[#556B2F]">รหัสผ่าน</label>
+                    <label className="text-[11px] md:text-xs uppercase font-extrabold tracking-widest text-[#C9566F]">รหัสผ่าน</label>
                     <input
                       type="password"
                       required
                       placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-[#FFFFFF] border border-[#F5F0E6] focus:border-[#6A5242] outline-none rounded-lg px-4 py-2.5 text-sm text-[#3C322A] transition"
+                      className="w-full bg-white border border-[#F7DCE2] focus:border-[#E06D85] outline-none rounded-lg px-4 py-2.5 text-sm text-[#3B262B] transition"
                     />
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full mt-5 py-3 bg-[#6A5242] hover:bg-[#523e31] text-[#FDFBF7] text-sm font-extrabold uppercase tracking-wider rounded-lg transition duration-200 cursor-pointer shadow-sm"
+                  className="w-full mt-5 py-3 bg-[#E06D85] hover:bg-[#C9566F] text-white text-sm font-extrabold uppercase tracking-wider rounded-lg transition duration-200 cursor-pointer shadow-sm"
                 >
                   สมัครสมาชิก
                 </button>
 
-                <p className="text-center text-sm text-[#556B2F] mt-5 font-semibold">
+                <p className="text-center text-sm text-[#3B262B]/75 mt-5 font-semibold">
                   มีบัญชีอยู่แล้วใช่ไหม?{" "}
                   <button
                     type="button"
@@ -346,7 +341,7 @@ localStorage.setItem(
                       setErrorMsg("");
                       setSuccessMsg("");
                     }}
-                    className="text-[#6A5242] hover:underline font-extrabold cursor-pointer ml-1"
+                    className="text-[#E06D85] hover:text-[#C9566F] hover:underline font-extrabold cursor-pointer ml-1"
                   >
                     เข้าสู่ระบบ
                   </button>
@@ -358,30 +353,30 @@ localStorage.setItem(
             {authState === "dashboard" && user && (
               <div className="space-y-6">
                 {/* Profile Header */}
-                <div className="flex flex-col items-center gap-3 text-center pb-5 border-b border-[#F5F0E6]">
-                  <div className="w-14 h-14 flex items-center justify-center bg-[#FDFBF7] text-[#6A5242] text-lg font-extrabold rounded-full border border-[#F5F0E6] shadow-sm">
+                <div className="flex flex-col items-center gap-3 text-center pb-5 border-b border-[#F7DCE2]">
+                  <div className="w-14 h-14 flex items-center justify-center bg-[#FFF5F7] text-[#E06D85] text-lg font-extrabold rounded-full border border-[#F7DCE2] shadow-sm">
                     {user.firstName?.[0] || user.email?.[0]?.toUpperCase()}
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-[#3C322A]">
+                    <h3 className="text-base font-bold text-[#3B262B]">
                       {user.firstName || user.lastName ? `${user.firstName || ""} ${user.lastName || ""}`.trim() : "ยินดีต้อนรับ"}
                     </h3>
-                    <p className="text-xs md:text-sm text-[#556B2F] font-semibold">{user.email}</p>
+                    <p className="text-xs md:text-sm text-[#C9566F] font-semibold">{user.email}</p>
                   </div>
                 </div>
 
                 {/* Status Panel */}
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-[#FDFBF7] border border-[#F5F0E6]">
-                    <span className="text-xs font-bold text-[#556B2F] uppercase tracking-wider">การเชื่อมต่อฐานข้อมูล</span>
-                    <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#6A5242] text-[#FDFBF7] text-[10px] font-bold tracking-widest uppercase">
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-[#FFF5F7] border border-[#F7DCE2]">
+                    <span className="text-xs font-bold text-[#3B262B]/80 uppercase tracking-wider">การเชื่อมต่อฐานข้อมูล</span>
+                    <span className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#E06D85] text-white text-[10px] font-bold tracking-widest uppercase">
                       Neon DB Record
                     </span>
                   </div>
 
                   <div className="space-y-1.5">
-                    <span className="text-xs text-[#556B2F] font-bold uppercase tracking-widest">รหัส Neon DB</span>
-                    <code className="text-xs md:text-sm bg-[#FDFBF7] border border-[#F5F0E6] px-3.5 py-2.5 rounded-lg text-[#3C322A] font-mono break-all select-all block shadow-inner">
+                    <span className="text-xs text-[#C9566F] font-bold uppercase tracking-widest">รหัส Neon DB</span>
+                    <code className="text-xs md:text-sm bg-[#FFF5F7] border border-[#F7DCE2] px-3.5 py-2.5 rounded-lg text-[#3B262B] font-mono break-all select-all block shadow-inner">
                       {user.id}
                     </code>
                   </div>
@@ -390,7 +385,7 @@ localStorage.setItem(
                 {/* Sign Out Action */}
                 <button
                   onClick={handleSignOut}
-                  className="w-full mt-6 py-3 bg-[#FFFFFF] hover:bg-[#FDFBF7] text-[#6A5242] hover:text-[#523e31] text-sm font-extrabold uppercase tracking-wider rounded-lg border border-[#F5F0E6] transition duration-200 cursor-pointer shadow-sm"
+                  className="w-full mt-6 py-3 bg-white hover:bg-[#FFF5F7] text-[#C9566F] hover:text-[#E06D85] text-sm font-extrabold uppercase tracking-wider rounded-lg border border-[#F7DCE2] transition duration-200 cursor-pointer shadow-sm"
                 >
                   ออกจากระบบ
                 </button>

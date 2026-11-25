@@ -1,7 +1,7 @@
 /**
- * unified API fetch handler.
- * Because we configured Next.js rewrites, requests starting with "/api" are proxied
- * to the backend server (e.g., http://localhost:8000/api).
+ * Unified API fetch handler.
+ * Requests starting with "/api" are proxied via Next.js rewrites
+ * to the backend server (http://localhost:8001/api).
  * The browser automatically includes the HTTP-only "token" cookie in all of these calls.
  */
 const buildQuery = (params = {}) => {

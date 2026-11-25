@@ -46,7 +46,7 @@ app.use(
   }),
 );
 
-app.get("/", (c) => c.text("Bare & Bold Hono API Server is running!"));
+app.get("/", (c) => c.text("LITTLE U Hono API Server is running!"));
 
 app.route("/api/auth", authRouter);
 app.route("/api/employees", employeeRouter);
@@ -67,7 +67,7 @@ app.route("/api/settings", settingsRouter);
 
 console.log(`
 ══════════════════════════════════════════════
-  Bare & Bold Backend API Server
+  Little U Accessories Shop Backend API Server
   Environment: ${envMode}
   Port: ${port}
 ══════════════════════════════════════════════

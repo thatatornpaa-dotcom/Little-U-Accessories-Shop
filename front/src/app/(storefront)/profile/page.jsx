@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import {Camera,Mail, Phone,User,MapPin,Lock,LogOut,Home,Briefcase,Eye,EyeOff,Star,Trash2,Pencil,Plus,Check,X,} from "lucide-react";
+import { Camera, Mail, Phone, User, Lock, Home, Briefcase, Eye, EyeOff, Star, Trash2, Pencil, Plus, Check, X } from "lucide-react";
 import SearchDropdown from "@/components/SearchDropdown";
 import { provinces } from "@/data/provinces";
 import { addressService } from "@/services/address.service";
 import { authService } from "@/services/auth.service";
 
-const Clover = ({ className = "w-4 h-4", color = "#B8935A" }) => (
+const Clover = ({ className = "w-4 h-4", color = "#E06D85" }) => (
   <svg viewBox="0 0 24 24" className={className} fill="none">
     <g fill={color}>
       <circle cx="8" cy="8" r="4.2" />
@@ -15,7 +15,7 @@ const Clover = ({ className = "w-4 h-4", color = "#B8935A" }) => (
       <circle cx="8" cy="16" r="4.2" />
       <circle cx="16" cy="16" r="4.2" />
     </g>
-    <rect x="11.2" y="11.2" width="1.6" height="7" rx="0.8" fill={color} opacity="0.6" />
+    <rect x="11.2" y="11.2" width="1.6" height="7" rx="0.8" fill={color} opacity="0.65" />
   </svg>
 );
 
@@ -31,9 +31,9 @@ function Toast({ message, show }) {
     >
       <div
         className="flex items-center gap-2 px-5 py-3 rounded-full shadow-lg text-sm"
-        style={{ background: "#402C22", color: "#F1E9DC" }}
+        style={{ background: "#3B262B", color: "#FFF9FA" }}
       >
-        <Check className="w-4 h-4" style={{ color: "#C9A66B" }} />
+        <Check className="w-4 h-4" style={{ color: "#F7DCE2" }} />
         {message}
       </div>
     </div>
@@ -43,16 +43,16 @@ function Toast({ message, show }) {
 function SectionHeader({ title, subtitle }) {
   return (
     <div className="flex items-start gap-3 mb-6">
-      <Clover className="w-5 h-5 mt-1.5 shrink-0" />
+      <Clover className="w-5 h-5 mt-1.5 shrink-0" color="#E06D85" />
       <div>
         <h2
           className="text-2xl"
-          style={{ fontFamily: "'Cormorant Garamond', serif", color: "#2B231C", fontWeight: 600 }}
+          style={{ fontFamily: "'Cormorant Garamond', serif", color: "#3B262B", fontWeight: 600 }}
         >
           {title}
         </h2>
         {subtitle && (
-          <p className="text-sm mt-0.5" style={{ color: "#8A7C6C" }}>
+          <p className="text-sm mt-0.5" style={{ color: "#C9566F" }}>
             {subtitle}
           </p>
         )}
@@ -64,12 +64,12 @@ function SectionHeader({ title, subtitle }) {
 function Field({ label, hint, children }) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-1.5" style={{ color: "#4A3F35" }}>
+      <label className="block text-sm font-medium mb-1.5" style={{ color: "#3B262B" }}>
         {label}
       </label>
       {children}
       {hint && (
-        <p className="text-xs mt-1" style={{ color: "#A99A87" }}>
+        <p className="text-xs mt-1" style={{ color: "#C9566F" }}>
           {hint}
         </p>
       )}
@@ -78,9 +78,9 @@ function Field({ label, hint, children }) {
 }
 
 const inputStyle = {
-  background: "#FFFFFF",
-  border: "1px solid #E4D9C7",
-  color: "#2B231C",
+  background: "#FFF9FA",
+  border: "1px solid #F7DCE2",
+  color: "#3B262B",
 };
 
 function TextInput(props) {
@@ -89,10 +89,10 @@ function TextInput(props) {
       {...props}
       style={inputStyle}
       className={
-        "w-full px-4 py-2.5 rounded-lg text-sm outline-none transition-all focus:ring-2 focus:border-transparent placeholder:text-[#B9AC99] " +
+        "w-full px-4 py-2.5 rounded-lg text-sm outline-none transition-all focus:ring-2 focus:border-transparent placeholder:text-[#C9566F]/55 " +
         (props.className || "")
       }
-      onFocus={(e) => (e.target.style.boxShadow = "0 0 0 2px #C9A66B55")}
+      onFocus={(e) => (e.target.style.boxShadow = "0 0 0 2px #E06D8555")}
       onBlur={(e) => (e.target.style.boxShadow = "none")}
     />
   );
@@ -104,8 +104,8 @@ function PrimaryButton({ children, onClick, type = "button", disabled, icon: Ico
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:brightness-110 active:scale-[0.98]"
-      style={{ background: "#5C4033", color: "#FAF6F0" }}
+      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#C9566F] active:scale-[0.98] cursor-pointer"
+      style={{ background: "#E06D85", color: "#FFFFFF" }}
     >
       {Icon && <Icon className="w-4 h-4" />}
       {children}
@@ -116,12 +116,13 @@ function PrimaryButton({ children, onClick, type = "button", disabled, icon: Ico
 function GhostButton({ children, onClick, icon: Icon, danger }) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium border transition-all hover:bg-[#F1E9DC] active:scale-[0.98]"
+      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium border transition-all hover:bg-[#FFF5F7] active:scale-[0.98] cursor-pointer"
       style={{
-        borderColor: danger ? "#C4574B55" : "#E4D9C7",
-        color: danger ? "#B03B2E" : "#4A3F35",
-        background: "transparent",
+        borderColor: danger ? "#C9566F66" : "#F7DCE2",
+        color: danger ? "#C9566F" : "#3B262B",
+        background: "#FFFFFF",
       }}
     >
       {Icon && <Icon className="w-4 h-4" />}
@@ -149,18 +150,14 @@ export default function ProfilePage() {
     if (!file) return;
     const reader = new FileReader();
 
-reader.onload = () => {
-  setAvatar(reader.result);
+    reader.onload = () => {
+      setAvatar(reader.result);
+      localStorage.setItem("avatar", reader.result);
+      window.dispatchEvent(new Event("profileUpdated"));
+      notify("เปลี่ยนรูปโปรไฟล์เรียบร้อยแล้ว");
+    };
 
-  localStorage.setItem(
-    "avatar",
-    reader.result
-  );
-window.dispatchEvent(new Event("profileUpdated"));
-  notify("เปลี่ยนรูปโปรไฟล์เรียบร้อยแล้ว");
-};
-
-reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
   };
 
   const [profileSaved, setProfileSaved] = useState({
@@ -228,10 +225,7 @@ reader.readAsDataURL(file);
     setProfileSaved(updatedProfile);
     setProfile(updatedProfile);
 
-    localStorage.setItem(
-      "profile",
-      JSON.stringify(updatedProfile)
-    );
+    localStorage.setItem("profile", JSON.stringify(updatedProfile));
     if (profile.bio) {
       localStorage.setItem("profile_bio", profile.bio);
     }
@@ -244,9 +238,7 @@ reader.readAsDataURL(file);
         phone: profile.phone,
       });
 
-      const oldUser = JSON.parse(
-        localStorage.getItem("bare_user") || "{}"
-      );
+      const oldUser = JSON.parse(localStorage.getItem("bare_user") || "{}");
 
       const updatedUser = {
         ...oldUser,
@@ -255,10 +247,7 @@ reader.readAsDataURL(file);
         email: profile.email,
       };
 
-      localStorage.setItem(
-        "bare_user",
-        JSON.stringify(updatedUser)
-      );
+      localStorage.setItem("bare_user", JSON.stringify(updatedUser));
 
       window.dispatchEvent(new Event("profileUpdated"));
       notify("บันทึกข้อมูลส่วนตัวเรียบร้อยแล้ว");
@@ -268,12 +257,12 @@ reader.readAsDataURL(file);
     }
   };
   const cancelProfile = () => setProfile(profileSaved);
-const updateProfile = (field) => (e) => {
-  setProfile((prev) => ({
-    ...prev,
-    [field]: e.target.value,
-  }));
-};
+  const updateProfile = (field) => (e) => {
+    setProfile((prev) => ({
+      ...prev,
+      [field]: e.target.value,
+    }));
+  };
 
   const [addresses, setAddresses] = useState(() => {
     if (typeof window === "undefined") return [];
@@ -284,10 +273,7 @@ const updateProfile = (field) => (e) => {
   });
 
   useEffect(() => {
-    localStorage.setItem(
-      "addresses",
-      JSON.stringify(addresses)
-    );
+    localStorage.setItem("addresses", JSON.stringify(addresses));
   }, [addresses]);
 
   const loadAddresses = async () => {
@@ -621,7 +607,7 @@ const updateProfile = (field) => (e) => {
     return s;
   })();
   const strengthLabel = ["อ่อนมาก", "อ่อน", "ปานกลาง", "ดี", "ดีมาก"][pwStrength];
-  const strengthColor = ["#D9CFC0", "#C4574B", "#C9954F", "#8A9A5B", "#5C7A4A"][pwStrength];
+  const strengthColor = ["#F7DCE2", "#C9566F", "#E06D85", "#E88DA1", "#D45D79"][pwStrength];
 
   const savePassword = () => {
     if (!pw.current || !pw.next || !pw.confirm) {
@@ -640,9 +626,8 @@ const updateProfile = (field) => (e) => {
     notify("เปลี่ยนรหัสผ่านเรียบร้อยแล้ว");
   };
 
-  
   return (
-    <div style={{ background: "#FAF6F0", minHeight: "100vh" }} className="w-full">
+    <div style={{ background: "#FFF9FA", minHeight: "100vh" }} className="w-full">
       <style>{`
         ${FONT_IMPORT}
         * { font-family: 'Manrope', sans-serif; }
@@ -654,65 +639,65 @@ const updateProfile = (field) => (e) => {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 pb-24">
         {/* ===== ปกโปรไฟล์ ===== */}
         <div className="flex justify-center mb-8">
-  <div className="relative">
-    <img
-      src={avatar}
-      alt="รูปโปรไฟล์"
-      className="w-32 h-32 rounded-full object-cover shadow-md"
-      style={{ border: "4px solid #FAF6F0" }}
-    />
+          <div className="relative">
+            <img
+              src={avatar}
+              alt="รูปโปรไฟล์"
+              className="w-32 h-32 rounded-full object-cover shadow-md"
+              style={{ border: "4px solid #FFF5F7" }}
+            />
 
-    <button
-      onClick={handleAvatarPick}
-      className="absolute bottom-1 right-1 w-8 h-8 rounded-full flex items-center justify-center"
-      style={{ background: "#5C4033" }}
-    >
-      <Camera className="w-4 h-4 text-white" />
-    </button>
+            <button
+              type="button"
+              onClick={handleAvatarPick}
+              className="absolute bottom-1 right-1 w-8 h-8 rounded-full flex items-center justify-center hover:bg-[#C9566F] transition cursor-pointer shadow"
+              style={{ background: "#E06D85" }}
+            >
+              <Camera className="w-4 h-4 text-white" />
+            </button>
 
-    <input
-      ref={fileInputRef}
-      type="file"
-      accept="image/*"
-      className="hidden"
-      onChange={handleAvatarChange}
-    />
-  </div>
-</div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleAvatarChange}
+            />
+          </div>
+        </div>
 
         <div className="mb-10 pl-1">
-          <h1 className="serif text-3xl" style={{ color: "#2B231C", fontWeight: 600 }}>
+          <h1 className="serif text-3xl" style={{ color: "#3B262B", fontWeight: 600 }}>
             {profileSaved.fullName || "โปรไฟล์ของฉัน"}
           </h1>
-          
         </div>
 
         <section
           className="rounded-2xl p-6 sm:p-8 mb-8"
-          style={{ background: "#FFFFFF", border: "1px solid #EFE6D6" }}
+          style={{ background: "#FFFFFF", border: "1px solid #F7DCE2" }}
         >
           <SectionHeader title="ข้อมูลส่วนตัว" subtitle="แก้ไขชื่อ ข้อมูลติดต่อ และคำแนะนำตัวของคุณ" />
 
           <div className="grid sm:grid-cols-2 gap-5">
             <Field label="ชื่อจริง">
               <div className="relative">
-                <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#B9AC99" }} />
-                <TextInput className="pl-9" value={profile.firstName} onChange={updateProfile("firstName")} placeholder="กรอกชื่อจริง"/>
+                <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#C9566F" }} />
+                <TextInput className="pl-9" value={profile.firstName} onChange={updateProfile("firstName")} placeholder="กรอกชื่อจริง" />
               </div>
             </Field>
-            <Field label="นามสกุล" >
-              <TextInput value={profile.lastName} onChange={updateProfile("lastName")} placeholder="กรอกนามสกุล"/>
+            <Field label="นามสกุล">
+              <TextInput value={profile.lastName} onChange={updateProfile("lastName")} placeholder="กรอกนามสกุล" />
             </Field>
             <Field label="อีเมล (ห้ามแก้ไข)">
               <div className="relative">
-                <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#B9AC99" }} />
-                <TextInput className="pl-9 opacity-70 bg-zinc-100/60 cursor-not-allowed" type="email" value={profile.email} disabled placeholder="example@email.com"/>
+                <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#C9566F" }} />
+                <TextInput className="pl-9 opacity-75 bg-[#FFF5F7] cursor-not-allowed" type="email" value={profile.email} disabled placeholder="example@email.com" />
               </div>
             </Field>
             <Field label="เบอร์โทรศัพท์">
               <div className="relative">
-                <Phone className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#B9AC99" }} />
-                <TextInput className="pl-9" value={profile.phone}onChange={updateProfile("phone")}placeholder="000-000-0000"/>
+                <Phone className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#C9566F" }} />
+                <TextInput className="pl-9" value={profile.phone} onChange={updateProfile("phone")} placeholder="000-000-0000" />
               </div>
             </Field>
           </div>
@@ -726,8 +711,8 @@ const updateProfile = (field) => (e) => {
                 maxLength={400}
                 rows={3}
                 style={inputStyle}
-                className="w-full px-4 py-2.5 rounded-lg text-sm outline-none resize-none focus:ring-2 focus:border-transparent"
-                onFocus={(e) => (e.target.style.boxShadow = "0 0 0 2px #C9A66B55")}
+                className="w-full px-4 py-2.5 rounded-lg text-sm outline-none resize-none focus:ring-2 focus:border-transparent placeholder:text-[#C9566F]/55"
+                onFocus={(e) => (e.target.style.boxShadow = "0 0 0 2px #E06D8555")}
                 onBlur={(e) => (e.target.style.boxShadow = "none")}
               />
             </Field>
@@ -745,7 +730,7 @@ const updateProfile = (field) => (e) => {
 
         <section
           className="rounded-2xl p-6 sm:p-8 mb-8"
-          style={{ background: "#FFFFFF", border: "1px solid #EFE6D6" }}
+          style={{ background: "#FFFFFF", border: "1px solid #F7DCE2" }}
         >
           <div className="flex items-start justify-between mb-2">
             <SectionHeader title="ที่อยู่จัดส่ง" subtitle="บันทึกที่อยู่บ้านหรือที่ทำงานไว้ใช้ตอนสั่งซื้อ" />
@@ -758,7 +743,7 @@ const updateProfile = (field) => (e) => {
 
           <div className="space-y-3 mb-2">
             {addresses.length === 0 && !showAddrForm && (
-              <p className="text-sm py-6 text-center" style={{ color: "#A99A87" }}>
+              <p className="text-sm py-6 text-center" style={{ color: "#C9566F" }}>
                 ยังไม่มีที่อยู่จัดส่งที่บันทึกไว้ กด “เพิ่มที่อยู่ใหม่” เพื่อเริ่มต้น
               </p>
             )}
@@ -766,76 +751,80 @@ const updateProfile = (field) => (e) => {
               <div
                 key={addr.id}
                 className="rounded-xl p-4 flex items-start justify-between gap-3"
-                style={{ background: "#FBF7F0", border: "1px solid #EFE6D6" }}
+                style={{ background: "#FFF5F7", border: "1px solid #F7DCE2" }}
               >
                 <div className="flex gap-3">
                   <div
                     className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
-                    style={{ background: "#F1E9DC" }}
+                    style={{ background: "#F7DCE2" }}
                   >
                     {addr.label === "home" ? (
-                      <Home className="w-4 h-4" style={{ color: "#5C4033" }} />
+                      <Home className="w-4 h-4" style={{ color: "#E06D85" }} />
                     ) : (
-                      <Briefcase className="w-4 h-4" style={{ color: "#5C4033" }} />
+                      <Briefcase className="w-4 h-4" style={{ color: "#E06D85" }} />
                     )}
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-semibold" style={{ color: "#2B231C" }}>
+                      <span className="text-sm font-semibold" style={{ color: "#3B262B" }}>
                         {addr.recipient || profile.fullName}
                       </span>
                       <span
                         className="text-[11px] px-2 py-0.5 rounded-full"
-                        style={{ background: "#EADFC8", color: "#5C4033" }}
+                        style={{ background: "#F7DCE2", color: "#C9566F" }}
                       >
                         {addr.label === "home" ? "ที่บ้าน" : "ที่ทำงาน"}
                       </span>
                       {addr.isDefault && (
                         <span
                           className="text-[11px] px-2 py-0.5 rounded-full flex items-center gap-1"
-                          style={{ background: "#5C4033", color: "#F1E9DC" }}
+                          style={{ background: "#E06D85", color: "#FFFFFF" }}
                         >
-                          <Star className="w-3 h-3" fill="#F1E9DC" /> ค่าเริ่มต้น
+                          <Star className="w-3 h-3" fill="#FFFFFF" /> ค่าเริ่มต้น
                         </span>
                       )}
                     </div>
-                    <p className="text-xs mt-1" style={{ color: "#8A7C6C" }}>
+                    <p className="text-xs mt-1" style={{ color: "#C9566F" }}>
                       {addr.phone}
                     </p>
-                    <p className="text-sm mt-1" style={{ color: "#4A3F35" }}>
+                    <p className="text-sm mt-1" style={{ color: "#3B262B" }}>
                       <>
-                    {addr.address}<br />
-                    {addr.subDistrict} {addr.district}<br />
-                    {addr.province} {addr.postcode}</>
+                        {addr.address}<br />
+                        {addr.subDistrict} {addr.district}<br />
+                        {addr.province} {addr.postcode}
+                      </>
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-1 shrink-0">
                   {!addr.isDefault && (
                     <button
+                      type="button"
                       title="ตั้งเป็นที่อยู่หลัก"
                       aria-label="ตั้งเป็นที่อยู่หลัก"
                       onClick={() => setDefaultAddress(addr.id)}
-                      className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-[#F1E9DC] transition-all"
+                      className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-[#F7DCE2] transition-all cursor-pointer"
                     >
-                      <Star className="w-4 h-4" style={{ color: "#B9AC99" }} />
+                      <Star className="w-4 h-4" style={{ color: "#C9566F" }} />
                     </button>
                   )}
                   <button
+                    type="button"
                     title="แก้ไขที่อยู่นี้"
                     aria-label="แก้ไขที่อยู่นี้"
                     onClick={() => startEditAddress(addr)}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-[#F1E9DC] transition-all"
+                    className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-[#F7DCE2] transition-all cursor-pointer"
                   >
-                    <Pencil className="w-4 h-4" style={{ color: "#8A7C6C" }} />
+                    <Pencil className="w-4 h-4" style={{ color: "#3B262B" }} />
                   </button>
                   <button
+                    type="button"
                     title="ลบที่อยู่นี้"
                     aria-label="ลบที่อยู่นี้"
                     onClick={() => deleteAddress(addr.id)}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-[#FBEAE7] transition-all"
+                    className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-rose-100 transition-all cursor-pointer"
                   >
-                    <Trash2 className="w-4 h-4" style={{ color: "#C4574B" }} />
+                    <Trash2 className="w-4 h-4" style={{ color: "#C9566F" }} />
                   </button>
                 </div>
               </div>
@@ -844,8 +833,8 @@ const updateProfile = (field) => (e) => {
 
           {/* ฟอร์มเพิ่ม/แก้ไขที่อยู่ */}
           {showAddrForm && (
-            <div className="mt-4 rounded-xl p-5" style={{ background: "#FBF7F0", border: "1px solid #EFE6D6" }}>
-              <p className="text-sm font-semibold mb-4" style={{ color: "#4A3F35" }}>
+            <div className="mt-4 rounded-xl p-5" style={{ background: "#FFF5F7", border: "1px solid #F7DCE2" }}>
+              <p className="text-sm font-semibold mb-4" style={{ color: "#3B262B" }}>
                 {editingId ? "แก้ไขที่อยู่จัดส่ง" : "เพิ่มที่อยู่จัดส่งใหม่"}
               </p>
 
@@ -857,12 +846,13 @@ const updateProfile = (field) => (e) => {
                   ].map(({ key, label, Icon }) => (
                     <button
                       key={key}
+                      type="button"
                       onClick={() => setAddrForm((f) => ({ ...f, label: key }))}
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm border transition-all"
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm border transition-all cursor-pointer"
                       style={
                         addrForm.label === key
-                          ? { background: "#5C4033", color: "#FAF6F0", borderColor: "#5C4033" }
-                          : { background: "#FFFFFF", color: "#4A3F35", borderColor: "#E4D9C7" }
+                          ? { background: "#E06D85", color: "#FFFFFF", borderColor: "#E06D85" }
+                          : { background: "#FFFFFF", color: "#3B262B", borderColor: "#F7DCE2" }
                       }
                     >
                       <Icon className="w-4 h-4" />
@@ -928,15 +918,15 @@ const updateProfile = (field) => (e) => {
                 />
 
                 <Field label="หมายเหตุผู้จัดส่ง">
-                    <textarea
+                  <textarea
                     value={addrForm.note}
-                    onChange={(e)=>
-                 setAddrForm(f=>({...f,note:e.target.value}))} rows={3}
+                    onChange={(e) => setAddrForm((f) => ({ ...f, note: e.target.value }))}
+                    rows={3}
                     placeholder="เช่น ฝากไว้กับ รปภ. หรือโทรก่อนส่ง"
                     style={inputStyle}
-                    className="w-full px-4 py-2.5 rounded-lg outline-none resize-none"/>
+                    className="w-full px-4 py-2.5 rounded-lg outline-none resize-none text-sm placeholder:text-[#C9566F]/55"
+                  />
                 </Field>
-
               </div>
 
               <div className="flex items-center justify-end gap-3 mt-5">
@@ -953,7 +943,7 @@ const updateProfile = (field) => (e) => {
 
         <section
           className="rounded-2xl p-6 sm:p-8 mb-8"
-          style={{ background: "#FFFFFF", border: "1px solid #EFE6D6" }}
+          style={{ background: "#FFFFFF", border: "1px solid #F7DCE2" }}
         >
           <SectionHeader title="เปลี่ยนรหัสผ่าน" subtitle="ควรตั้งรหัสผ่านที่คาดเดายากเพื่อความปลอดภัยของบัญชี" />
 
@@ -965,7 +955,7 @@ const updateProfile = (field) => (e) => {
             ].map(({ key, label }) => (
               <Field key={key} label={label}>
                 <div className="relative">
-                  <Lock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#B9AC99" }} />
+                  <Lock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#C9566F" }} />
                   <TextInput
                     className="pl-9 pr-10"
                     type={showPw[key] ? "text" : "password"}
@@ -978,24 +968,24 @@ const updateProfile = (field) => (e) => {
                     title={showPw[key] ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
                     aria-label={showPw[key] ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
                     onClick={() => setShowPw((s) => ({ ...s, [key]: !s[key] }))}
-                    className="absolute right-3 top-1/2 -translate-y-1/2"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
                   >
                     {showPw[key] ? (
-                      <EyeOff className="w-4 h-4" style={{ color: "#B9AC99" }} />
+                      <EyeOff className="w-4 h-4" style={{ color: "#C9566F" }} />
                     ) : (
-                      <Eye className="w-4 h-4" style={{ color: "#B9AC99" }} />
+                      <Eye className="w-4 h-4" style={{ color: "#C9566F" }} />
                     )}
                   </button>
                 </div>
                 {key === "next" && pw.next && (
                   <div className="flex items-center gap-2 mt-2">
-                    <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "#EFE6D6" }}>
+                    <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "#F7DCE2" }}>
                       <div
                         className="h-full rounded-full transition-all"
                         style={{ width: `${(pwStrength / 4) * 100}%`, background: strengthColor }}
                       />
                     </div>
-                    <span className="text-xs" style={{ color: strengthColor }}>
+                    <span className="text-xs font-medium" style={{ color: strengthColor }}>
                       {strengthLabel}
                     </span>
                   </div>
@@ -1010,11 +1000,7 @@ const updateProfile = (field) => (e) => {
             </PrimaryButton>
           </div>
         </section>
-
-        
       </div>
-
-      
     </div>
   );
 }

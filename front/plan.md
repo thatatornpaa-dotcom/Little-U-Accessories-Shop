@@ -1,5 +1,5 @@
 
-# 📋 Bare & Bold — Project Plan & Team Task Division
+# 📋 LITTLE U — Project Plan & Team Task Division
 
 > ระบบ e-commerce สร้อยข้อมือแบบ custom / ready-to-ship
 > Tech Stack: **Next.js** (Frontend + Backoffice) · **Hono + Bun** (Backend) · **PostgreSQL / Neon** (DB) · **Cloudflare R2** (Storage) · **Prisma ORM**

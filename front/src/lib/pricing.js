@@ -17,7 +17,7 @@ export const groupCartItemsByShop = (items = []) => {
     const group = groups.get(key) || {
       key,
       shopId: item.shopId || null,
-      shopName: item.shopName || "Bare & Bold",
+      shopName: item.shopName || "LITTLE U",
       items: [],
       subtotal: 0,
     };

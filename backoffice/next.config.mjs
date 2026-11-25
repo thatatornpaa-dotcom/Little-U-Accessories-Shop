@@ -1,20 +1,18 @@
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactCompiler: true,
-  trailingSlash: true,
-  images: {
-    unoptimized: true,
+  turbopack: {
+    root: __dirname,
   },
   async rewrites() {
-    const apiDest =
-      process.env.BACKEND_API_URL ||
-      process.env.NEXT_PUBLIC_URL_API ||
-      process.env.NEXT_PUBLIC_API_URL ||
-      "http://localhost:8000/api";
     return [
       {
         source: "/api/:path*",
-        destination: apiDest.endsWith("/") ? `${apiDest}:path*` : `${apiDest}/:path*`,
+        destination: "http://localhost:8001/api/:path*",
       },
     ];
   },

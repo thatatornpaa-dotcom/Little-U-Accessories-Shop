@@ -1,4 +1,4 @@
-# k6 Load Tests — Bare & Bold API
+# k6 Load Tests — LITTLE U API
 
 ## Requirements
 

@@ -1,16 +1,16 @@
-# Postman Collection — Bare & Bold Marketplace API
+# Postman Collection — Little U Accessories Shop API
 
 สร้างจาก route ที่มีจริงใน backend ตอนนี้ (`10 พ.ย. 2026`)
 
 ## ไฟล์
 
-- `BareAndBold.postman_collection.json` — collection หลัก
-- `BareAndBold.postman_environment.json` — environment `Bare & Bold Local`
+- `Little U Accessories.postman_collection.json` — collection หลัก
+- `Little U Accessories.postman_environment.json` — environment `Little U Local`
 
 ## วิธีใช้
 
 1. เปิด Postman → **Import** → เลือกทั้ง 2 ไฟล์
-2. เลือก Environment: **Bare & Bold Local**
+2. เลือก Environment: **Little U Local**
 3. ตรวจ `baseUrl` ให้เป็น `http://localhost:8000`
 4. รันตามลำดับ folder:
    - `00 · Health`

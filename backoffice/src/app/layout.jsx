@@ -9,8 +9,8 @@ const anuphan = Anuphan({
 });
 
 export const metadata = {
-  title: "Bare & Bold Backoffice Portal",
-  description: "Management Console for Bare & Bold Administration",
+  title: "LITTLE U Backoffice Portal",
+  description: "Management Console for Little U Accessories Shop Administration",
 };
 
 export default function RootLayout({ children }) {

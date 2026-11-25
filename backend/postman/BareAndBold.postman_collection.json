@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "0d7f7a52-1f2f-4d7f-9a7f-bareandbold01",
-    "name": "Bare & Bold Marketplace API",
-    "description": "Postman collection สำหรับ API ที่มีอยู่จริงในระบบ (Bare & Bold Marketplace)\n\nลำดับที่แนะนำ: 01 Auth → 02 Auth Backoffice → 03 Public Catalog → 04 Buyer → 05 Seller → 06 Admin → 09 Permission\n\nหมายเหตุ: approve/reject shop เปลี่ยนข้อมูลจริง, upload ต้องเลือกไฟล์เอง",
+    "name": "Little U Accessories Shop API",
+    "description": "Postman collection สำหรับ API ที่มีอยู่จริงในระบบ (Little U Accessories Shop)\n\nลำดับที่แนะนำ: 01 Auth → 02 Auth Backoffice → 03 Public Catalog → 04 Buyer → 05 Seller → 06 Admin → 09 Permission\n\nหมายเหตุ: approve/reject shop เปลี่ยนข้อมูลจริง, upload ต้องเลือกไฟล์เอง",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
